@@ -1,5 +1,6 @@
 import drinkz.db
 
+#Add different bottle types
 drinkz.db.add_bottle_type('Johnnie Walker', 'Black Label', 'blended scotch')
 drinkz.db.add_bottle_type('Jose Cuervo', 'Red Label', 'good tequila')
 

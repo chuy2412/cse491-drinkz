@@ -36,7 +36,10 @@ def add_to_inventory(mfg, liquor, amount):
 
     # just add it to the inventory database as a tuple, for now.
     #_inventory_db.append((mfg, liquor, amount))
-    _inventory_db[((mfg,liquor))] = amount
+    if not ((mfg,liquor)) in _inventory_db:
+        _inventory_db[((mfg,liquor))] = set()
+        
+    _inventory_db[((mfg,liquor))].add(amount)
 
 def check_inventory(mfg, liquor):
     if ((mfg,liquor)) in _inventory_db: #now checks in a dictionary
@@ -48,9 +51,9 @@ def get_liquor_amount(mfg, liquor):
     "Retrieve the total amount of any given liquor currently in inventory."
     amounts = []
     totalVolume = 0.0
-    for ((mfg, liquor)) in _inventory_db:
-            amounts.append(_inventory_db[mfg,liquor]) #add amount
-            print _inventory_db[mfg,liquor]
+    if((mfg,liquor)) in _inventory_db:
+        for bottle_amount in _inventory_db[mfg,liquor]:
+            amounts.append(bottle_amount) #add amount
 
     for bottle in amounts:
         amt = bottle.split()

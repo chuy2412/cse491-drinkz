@@ -3,7 +3,7 @@ Database functionality for drinkz information.
 """
 
 # private singleton variables at module level
-_bottle_types_db = []
+_bottle_types_db = set()
 _inventory_db = []
 
 def _reset_db():

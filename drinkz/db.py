@@ -3,14 +3,14 @@ Database functionality for drinkz information.
 """
 
 # private singleton variables at module level
-_bottle_types_db = set()
-_inventory_db = []
+_bottle_types_db = set() #Changed to Set
+_inventory_db = {}       #Changed to dictionary
 
 def _reset_db():
     "A method only to be used during testing -- toss the existing db info."
     global _bottle_types_db, _inventory_db
-    _bottle_types_db = set()
-    _inventory_db = []
+    _bottle_types_db = set()   #Changed to Set
+    _inventory_db = {}         #Changed to Dictionary
 
 # exceptions in Python inherit from Exception and generally don't need to
 # override any methods.
@@ -35,12 +35,12 @@ def add_to_inventory(mfg, liquor, amount):
         raise LiquorMissing(err)
 
     # just add it to the inventory database as a tuple, for now.
-    _inventory_db.append((mfg, liquor, amount))
+    #_inventory_db.append((mfg, liquor, amount))
+    _inventory_db[((mfg,liquor))] = amount
 
 def check_inventory(mfg, liquor):
-    for (m, l, _) in _inventory_db:
-        if mfg == m and liquor == l:
-            return True
+    if ((mfg,liquor)) in _inventory_db: #now checks in a dictionary
+        return True   
         
     return False
 
@@ -48,9 +48,9 @@ def get_liquor_amount(mfg, liquor):
     "Retrieve the total amount of any given liquor currently in inventory."
     amounts = []
     totalVolume = 0.0
-    for (m, l, amount) in _inventory_db:
-        if mfg == m and liquor == l:
-            amounts.append(amount)
+    for ((mfg, liquor)) in _inventory_db:
+            amounts.append(_inventory_db[mfg,liquor]) #add amount
+            print _inventory_db[mfg,liquor]
 
     for bottle in amounts:
         amt = bottle.split()
@@ -58,10 +58,13 @@ def get_liquor_amount(mfg, liquor):
             totalVolume += float(amt[0]) * 29.5735
         else:
             totalVolume += float(amt[0])
-            
+
     return totalVolume
 
 def get_liquor_inventory():
     "Retrieve all liquor types in inventory, in tuple form: (mfg, liquor)."
-    for (m, l, _) in _inventory_db:
-        yield m, l
+    #for (m, l, _) in _inventory_db:
+    #    yield m, l
+
+    for key in sorted(_inventory_db):
+        yield key

@@ -59,8 +59,11 @@ def get_liquor_amount(mfg, liquor):
         amt = bottle.split()
         if amt[1] == "oz":
             totalVolume += float(amt[0]) * 29.5735
-        else:
+        elif amt[1]=="ml":
             totalVolume += float(amt[0])
+        elif amt[1] == "gallon":
+            totalVolume += float(amt[0]) * 3785.41
+
 
     return totalVolume
 

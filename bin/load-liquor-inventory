@@ -1,8 +1,5 @@
 #! /usr/bin/env python
 import sys
-sys.path.insert(0, 'bin/') # allow _mypath to be loaded;
-
-import sys
 import _mypath
 
 from drinkz.load_bulk_data import load_bottle_types, load_inventory

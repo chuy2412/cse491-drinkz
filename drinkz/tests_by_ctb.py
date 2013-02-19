@@ -1,6 +1,8 @@
 """
 Miscellaneous professor tests.
 """
+import sys
+sys.path.insert(0, 'bin/') # allow _mypath to be loaded;
 
 from . import db, load_bulk_data
 from cStringIO import StringIO

@@ -1,17 +1,51 @@
 """
 Database functionality for drinkz information.
 """
+import recipes
 
 # private singleton variables at module level
 _bottle_types_db = set() #Changed to Set
 _inventory_db = {}       #Changed to dictionary
+_recipe_db = set()          #Added a recipe database as set
+_recipe_name_db = set()    #Added a recipe name as a set
+
+#Input: a recipe
+#This function adds a recipe to the dictionary
+#If the recipe was already there, no ingredients are included
+def add_recipe(r):
+    #Check if the recipe name already exists
+    if r.Name in _recipe_name_db:
+        assert False, 'Recipe name already exists'
+
+    else:
+        #New recipe
+        #Include recipe in the recipe name database
+        _recipe_name_db.add(r.Name)
+
+        #Add recipe in the recipe database
+        _recipe_db.add(r)
+
+#Input: a recipe name
+#If recipe found, it returns the recipe
+def get_recipe(name):
+    for temp in _recipe_db():
+        if name in temp.Name: #Found the recipe name
+            return temp
+        
+    #No recipe found
+    return 
+
+#Return all the recipes
+def get_all_recipes():
+    return _recipe_db  #Return all the recipes
 
 def _reset_db():
     "A method only to be used during testing -- toss the existing db info."
     global _bottle_types_db, _inventory_db
     _bottle_types_db = set()   #Changed to Set
     _inventory_db = {}         #Changed to Dictionary
-
+    _recipe_db = {}      #reset recipe database
+    _recipe_name_db = set()
 # exceptions in Python inherit from Exception and generally don't need to
 # override any methods.
 class LiquorMissing(Exception):
@@ -69,8 +103,5 @@ def get_liquor_amount(mfg, liquor):
 
 def get_liquor_inventory():
     "Retrieve all liquor types in inventory, in tuple form: (mfg, liquor)."
-    #for (m, l, _) in _inventory_db:
-    #    yield m, l
-
     for key in sorted(_inventory_db):
         yield key

@@ -10,6 +10,10 @@ class Recipe(object):
    #For example:
    #  Recipe('vodka martini', [('vodka', '6 oz'), ('vermouth', '1 oz')])
    ################################################################
-   def __init__(name,ingredient):
-      Name = name
-      Ingredient = ingredient         
+   def __init__(self,name, ingredient):
+      self.Name = name
+      self.Ingredient = ingredient         
+
+   def need_ingredients(self):
+	return self.Ingredient
+

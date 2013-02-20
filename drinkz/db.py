@@ -28,12 +28,11 @@ def add_recipe(r):
 #Input: a recipe name
 #If recipe found, it returns the recipe
 def get_recipe(name):
-    for temp in _recipe_db():
+    if not name in _recipe_name_db:
+        return #No recipe found
+    for temp in _recipe_db:
         if name in temp.Name: #Found the recipe name
-            return temp
-        
-    #No recipe found
-    return 
+            return temp       #Return the recipe
 
 #Return all the recipes
 def get_all_recipes():
@@ -41,10 +40,10 @@ def get_all_recipes():
 
 def _reset_db():
     "A method only to be used during testing -- toss the existing db info."
-    global _bottle_types_db, _inventory_db
+    global _bottle_types_db, _inventory_db, _recipe_db, _recipe_name_db
     _bottle_types_db = set()   #Changed to Set
     _inventory_db = {}         #Changed to Dictionary
-    _recipe_db = {}      #reset recipe database
+    _recipe_db = set()      #reset recipe database
     _recipe_name_db = set()
 # exceptions in Python inherit from Exception and generally don't need to
 # override any methods.

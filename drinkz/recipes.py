@@ -13,7 +13,3 @@ class Recipe(object):
    def __init__(self,name, ingredient):
       self.Name = name
       self.Ingredient = ingredient         
-
-   def need_ingredients(self):
-	return self.Ingredient
-

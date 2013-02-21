@@ -75,7 +75,7 @@ def need_ingredients(r):
 		new_amount = diff #str(diff) + ' ml' #to show ml
 		missing.append((type, new_amount))
 
-    print missing 
+    #print missing 
     return missing
 
 def _reset_db():

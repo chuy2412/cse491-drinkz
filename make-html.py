@@ -53,11 +53,16 @@ print >>fp, "Drinkz <p><a href='recipes.html'>Recipes</a>"
 print >>fp, """
 <p>
 <a href='inventory.html'>Inventory</a>
-
 </p>
+
 <p>
 <a href='liquor_types.html'>Liquor Types</a>
 </p>
+
+<p>
+<a href='Add_bottle_type.html'>Add Bottle Type</a>
+</p>
+
 """
 fp.close()
 
@@ -165,3 +170,17 @@ Link to the other three files:
 </p>
 """
 fp.close()
+
+
+#############################################################
+#Add_bottle_type
+#############################################################
+fp = open('html/Add_bottle_type.html', 'w')
+
+print >>fp, "<b>Add Bottle  Type</b><p></p>"
+print >>fp, """
+"""
+fp.close()
+
+
+

@@ -28,6 +28,7 @@ Additional methods (besides the ones needed for homework):
 
 """
 import recipes
+import unit_conversion     #HW4_1 to convert the amount to ml
 
 # private singleton variables at module level
 _bottle_types_db = set() #Changed to Set
@@ -69,7 +70,7 @@ def need_ingredients(r):
 	#get the type and the amount
 	type = i[0]
 	amount = i[1]
-	need_amount = convert_to_ml(amount)
+	need_amount = unit_conversion.convert_to_ml(amount)
 	current_amount = get_liquor_amount_noMix(type)
         diff = need_amount - current_amount
 	if diff >0:
@@ -127,23 +128,6 @@ def check_inventory(mfg, liquor):
         
     return False
 
-#Convert to ml
-#Input: the amount
-#Output: the corresponding amount in ml (as float)
-def convert_to_ml(amount):
-    amt = amount.split()
-    volume = 0.0
-    if amt[1] == "oz":
-    	volume += float(amt[0]) * 29.5735
-    elif amt[1]=="ml":
-        volume += float(amt[0])
-    elif amt[1] == "gallon":  #Added galon
-        volume += float(amt[0]) * 3785.41
-    elif amt[1] == "liter":   #Added liter
-	volume += float(amt[0]) * 1000.0
-
-    return volume
-
 #Input a type of liquor
 #Return the liquor amount in ml with biggest amount in a unique manufacturer
 # (No mixing allowed)
@@ -169,7 +153,7 @@ def get_liquor_amount_withMix(liquor):
 
     for s in amounts:
 	for bottle in s:
-        	totalVolume += convert_to_ml(bottle)  #Now calls the function convert_to_ml
+        	totalVolume += unit_conversion.convert_to_ml(bottle)  #Now calls the function convert_to_ml
                                                       #to make sure the function works
 
     return totalVolume;
@@ -183,7 +167,7 @@ def get_liquor_amount(mfg, liquor):
             amounts.append(bottle_amount) #add amount
 
     for bottle in amounts:
-        totalVolume += convert_to_ml(bottle)  #Now calls the function convert_to_ml
+        totalVolume += unit_conversion.convert_to_ml(bottle)  #Now calls the function convert_to_ml
 					     #to make sure the function works
 
     return totalVolume

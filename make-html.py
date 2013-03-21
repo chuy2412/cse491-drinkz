@@ -179,6 +179,12 @@ fp = open('html/Add_bottle_type.html', 'w')
 
 print >>fp, "<b>Add Bottle  Type</b><p></p>"
 print >>fp, """
+<form action='recv'>
+ Manufacturer? <input type='text' name='Manufacturer' size'20'>
+ Liquor? <input type='text' name='Liquor' size='20'>
+ Type? <input type='text' name='Type' size='20'>
+<input type='submit'>
+</form>
 """
 fp.close()
 

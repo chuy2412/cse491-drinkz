@@ -42,7 +42,8 @@ def add_recipe(r):
     #Check if the recipe name already exists
     for rec in _recipe_db:
 	if rec.Name ==r.Name:  #Recipe already exists
-		assert False, 'Recipe name already exists'
+		err = 'Duplicate Recipe'
+		raise DuplicateRecipeName(err)
     #New recipe
     #Add recipe in the recipe database
     _recipe_db.add(r)
@@ -90,6 +91,11 @@ def _reset_db():
 # override any methods.
 class LiquorMissing(Exception):
     pass
+
+
+class DuplicateRecipeName(Exception):
+    pass
+
 
 def add_bottle_type(mfg, liquor, typ):
     "Add the given bottle type into the drinkz database."

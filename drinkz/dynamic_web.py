@@ -64,6 +64,10 @@ def generate_index():
 	<a href='liquor_types.html'>Liquor Types</a>
 	</p>
 
+        <p>
+	<a href='convert_to_ml.html'>Convert to ml</a>
+	</p>
+
 	"""
 	return data
 
@@ -174,3 +178,20 @@ def generate_Liquor_Types():
 	"""
 	return data
 
+
+###############################################################
+#convert_to ml
+###############################################################
+def convert_to_ml():
+	data = "<b>Convert to ml</b><p></p>"
+        data = data +  """
+        <form action='recv'>
+        Amount? <input type='text' name='amount' size'20'>
+        <p><input type="radio" name="type" value="oz">oz<br></p>
+        <p><input type="radio" name="type" value="ml">ml</p>
+        <p><input type="radio" name="type" value="gallon">gallon</p>
+        <p><input type="radio" name="type" value="liter">liter</p>
+        <p><input type='submit'></p>
+        </form>
+        """
+        return data

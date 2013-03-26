@@ -9,6 +9,7 @@ dispatch = {
     '/recipes.html' : 'recipes',
     '/inventory.html' : 'inventory',
     '/liquor_types.html' : 'liquor_types',
+    '/convert_to_ml.html' : 'convert_to_ml',
     '/content' : 'somefile',
     '/error' : 'error',
     '/helmet' : 'helmet',
@@ -54,6 +55,11 @@ class SimpleApp(object):
 
     def liquor_types(self, environ, start_response):
         data = dynamic_web.generate_Liquor_Types()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+    def convert_to_ml(self, environ, start_response):
+        data = dynamic_web.convert_to_ml()
         start_response('200 OK', list(html_headers))
         return [data]
 

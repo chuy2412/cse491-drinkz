@@ -88,8 +88,8 @@ def generate_Recipes():
 	    if len(db.need_ingredients(r)) == 0:
 	        possible = 'Yes'
 
-	#Display result
-	data = data +  "<tr> <td>" + r.Name + " </td> <td>" + r.Ingredient + " </td> <td>" +possible +  " </td> </tr>"
+	    #Display result
+	    data = data +  "<tr> <td>" + r.Name + " </td> <td>" + str(r.Ingredient) + " </td> <td>" +possible +  " </td> </tr>"
 
 	data = data +  """
 	</table>
@@ -157,7 +157,7 @@ def generate_Liquor_Types():
 	<th>Type</th>
 	"""
 	for (mfg, liquor, type) in db._bottle_types_db:
-    		data = data + "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (mfg, liquor, type)
+    		data = data + "<tr> <td>" + mfg+ "</td> <td>" +liquor+" </td> <td>"+type+" </td> </tr>"
 
 	data = data +  """
 	</table>

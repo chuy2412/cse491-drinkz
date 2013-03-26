@@ -5,7 +5,10 @@ import simplejson
 import dynamic_web
 dispatch = {
     '/' : 'index',
+    '/index.html' : 'index',
     '/recipes.html' : 'recipes',
+    '/inventory.html' : 'inventory',
+    '/liquor_types.html' : 'liquor_types',
     '/content' : 'somefile',
     '/error' : 'error',
     '/helmet' : 'helmet',
@@ -38,8 +41,19 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
         
-    def index(self, environ, start_response):
+    def recipes(self, environ, start_response):
         data = dynamic_web.generate_Recipes()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+
+    def inventory(self, environ, start_response):
+        data = dynamic_web.generate_Inventory()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+    def liquor_types(self, environ, start_response):
+        data = dynamic_web.generate_Liquor_Types()
         start_response('200 OK', list(html_headers))
         return [data]
 

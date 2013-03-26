@@ -95,11 +95,15 @@ class SimpleApp(object):
         formdata = environ['QUERY_STRING']
         results = urlparse.parse_qs(formdata)
 
-        firstname = results['firstname'][0]
-        lastname = results['lastname'][0]
+        Amount = results['amount'][0]
+        Type = results['type'][0]
+    
+        amount_given = Amount + Type
 
         content_type = 'text/html'
-        data = "First name: %s; last name: %s.  <a href='./'>return to index</a>" % (firstname, lastname)
+        data = "<p>Amount given is: " + amount_given + "</p>"
+	data = data + "<p>Result is: in ml</p>"
+        data = data + "<p><a href='./'>return to index</a></p>"
 
         start_response('200 OK', list(html_headers))
         return [data]

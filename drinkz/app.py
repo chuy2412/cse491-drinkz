@@ -5,6 +5,7 @@ import simplejson
 import dynamic_web
 dispatch = {
     '/' : 'index',
+    '/recipes.html' : 'recipes',
     '/content' : 'somefile',
     '/error' : 'error',
     '/helmet' : 'helmet',
@@ -37,6 +38,11 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
         
+    def index(self, environ, start_response):
+        data = dynamic_web.generate_Recipes()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
     def somefile(self, environ, start_response):
         content_type = 'text/html'
         data = open('somefile.html').read()

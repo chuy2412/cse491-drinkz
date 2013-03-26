@@ -89,7 +89,7 @@ def generate_Recipes():
 	        possible = 'Yes'
 
 	#Display result
-	data = data +  "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (r.Name, r.Ingredient, possible)
+	data = data +  "<tr> <td>" + r.Name + " </td> <td>" + r.Ingredient + " </td> <td>" +possible +  " </td> </tr>"
 
 	data = data +  """
 	</table>
@@ -124,7 +124,7 @@ def generate_Inventory():
     		#Get the amount in ml 
     		amt = db.get_liquor_amount(mfg,liquor)
     		amount = str(amt) + ' ml'
-    		data = data +  "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (mfg, liquor, amount)
+    		data = data +  "<tr> <td>" + mfg + "</td> <td>"+ liquor + "</td> <td>"+ amount+ " </td> </tr>"
 
 	data = data + """
 	</table>

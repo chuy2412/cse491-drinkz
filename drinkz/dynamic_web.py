@@ -1,6 +1,7 @@
 #! /usr/bin/env python
-from drinkz import db      #Import database
-from drinkz import recipes #Import recipe class
+import unit_conversion
+import db      #Import database
+import recipes #Import recipe class
 import os
 
 #Reference: github.com/ctb/cse491-linkz
@@ -51,9 +52,10 @@ def add_items():
 ###############################################################
 def generate_index():
         add_items()
-	fp = open('html/index.html', 'w')
-	print >>fp, "Drinkz <p><a href='recipes.html'>Recipes</a>"
-	print >>fp, """
+	#data = open('html/index.html', 'w')
+	data = ""
+	data="Drinkz <p><a href='recipes.html'>Recipes</a>"
+	data= data +  """
 	<p>
 	<a href='inventory.html'>Inventory</a>
 	</p>
@@ -63,17 +65,17 @@ def generate_index():
 	</p>
 
 	"""
-	fp.close()
+	return data
 
 ###############################################################
 #Recipes
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
 def generate_Recipes():
-	fp = open('html/recipes.html', 'w')
+	#fp = open('html/recipes.html', 'w')
 
-	print >>fp, "<b>Recipes</b><p></p>"
-	print >>fp, """ 
+	data =  "<b>Recipes</b><p></p>"
+	data = data + """ 
 	<table border="1">
 	<tr>
 	<th>Recipe Name</th>
@@ -87,9 +89,9 @@ def generate_Recipes():
 	        possible = 'Yes'
 
 	#Display result
-	print >> fp, "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (r.Name, r.Ingredient, possible)
+	data = data +  "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (r.Name, r.Ingredient, possible)
 
-	print >>fp, """
+	data = data +  """
 	</table>
 	</tr>
 	</table>
@@ -102,16 +104,16 @@ def generate_Recipes():
 	<p><a href='liquor_types.html'>Liquor Types</a>
 	</p>
 	"""
-	fp.close()
+        return data
 
 #############################################################
 #Inventory
 ##############################################################
 def generate_Inventory():
-	fp = open('html/inventory.html', 'w')
+	#fp = open('html/inventory.html', 'w')
 
-	print >>fp, "<b>Inventory</b><p></p>"
-	print >>fp, """ 
+	data =  "<b>Inventory</b><p></p>"
+	data = data +  """ 
 	<table border="1">
 	<tr>
 	<th>Manufacturer</th>
@@ -122,9 +124,9 @@ def generate_Inventory():
     		#Get the amount in ml 
     		amt = db.get_liquor_amount(mfg,liquor)
     		amount = str(amt) + ' ml'
-    		print >> fp, "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (mfg, liquor, amount)
+    		data = data +  "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (mfg, liquor, amount)
 
-	print >>fp, """
+	data = data + """
 	</table>
 	</tr>
 	</table>
@@ -137,17 +139,17 @@ def generate_Inventory():
 	<p><a href='liquor_types.html'>Liquor Types</a>
 	</p>
 	"""
-	fp.close()
+	return data
 
 #############################################################
 #liquor_types
 #Reference: github.com/ctb/cse491-linkz
 #############################################################
 def generate_Liquor_Types():
-	fp = open('html/liquor_types.html', 'w')
+	#fp = open('html/liquor_types.html', 'w')
 
-	print >>fp, "<b>Liquor Types</b><p></p>"
-	print >>fp, """
+	data = "<b>Liquor Types</b><p></p>"
+	data = data + """
 	<table border="1">
 	<tr>
 	<th>Manufacturer</th>
@@ -155,9 +157,9 @@ def generate_Liquor_Types():
 	<th>Type</th>
 	"""
 	for (mfg, liquor, type) in db._bottle_types_db:
-    		print >> fp, "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (mfg, liquor, type)
+    		data = data + "<tr> <td>%s </td> <td>%s </td> <td>%s </td> </tr>" % (mfg, liquor, type)
 
-	print >>fp, """
+	data = data +  """
 	</table>
 	</tr>
 	</table>
@@ -170,4 +172,5 @@ def generate_Liquor_Types():
 	<p><a href='inventory.html'>Inventory</a>
 	</p>
 	"""
-	fp.close()
+	return data
+

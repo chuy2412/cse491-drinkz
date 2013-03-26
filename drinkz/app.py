@@ -2,7 +2,7 @@
 from wsgiref.simple_server import make_server
 import urlparse
 import simplejson
-
+import dynamic_web
 dispatch = {
     '/' : 'index',
     '/content' : 'somefile',
@@ -33,16 +33,7 @@ class SimpleApp(object):
         return fn(environ, start_response)
             
     def index(self, environ, start_response):
-        data = """\
-Visit:
-<a href='content'>a file</a>,
-<a href='error'>an error</a>,
-<a href='helmet'>an image</a>,
-<a href='somethingelse'>something else</a>, or
-<a href='form'>a form...</a>
-<p>
-<img src='/helmet'>
-"""
+        data = dynamic_web.generate_index()
         start_response('200 OK', list(html_headers))
         return [data]
         

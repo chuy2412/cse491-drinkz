@@ -47,6 +47,13 @@ def add_items():
 	r = recipes.Recipe('whiskey bath', [('blended scotch', '2 liter')])
 	db.add_recipe(r)
 
+
+###############################################################
+#load database
+###############################################################
+def load_database(filename):
+	db.load_db(filename)
+
 ###############################################################
 #Index
 #Reference: github.com/ctb/cse491-linkz

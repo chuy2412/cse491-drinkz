@@ -99,7 +99,7 @@ def save_db(filename):
     fp.close()
 
 def load_db(filename):
-    global _bottle_types_db, _inventory_db
+    global _bottle_types_db, _inventory_db, _recipe_db
     fp = open(filename, 'rb')
 
     loaded = load(fp)

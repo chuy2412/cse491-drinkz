@@ -3,6 +3,8 @@ from wsgiref.simple_server import make_server
 import urlparse
 import simplejson
 import dynamic_web
+import unit_conversion
+
 dispatch = {
     '/' : 'index',
     '/index.html' : 'index',
@@ -95,14 +97,22 @@ class SimpleApp(object):
         formdata = environ['QUERY_STRING']
         results = urlparse.parse_qs(formdata)
 
-        Amount = results['amount'][0]
+        #Get the amount
+        Amount = results['amount'][0]       
+	#Get the type (oz, ml, liter, gallon)
         Type = results['type'][0]
-    
-        amount_given = Amount + Type
+        
+  
+        #Concatenate amount and type
+        amount_given = Amount + " " + Type
 
+        #Compute the conversion
+        new_Amount = unit_conversion.convert_to_ml(amount_given)
+
+        #Generate results in html format
         content_type = 'text/html'
-        data = "<p>Amount given is: " + amount_given + "</p>"
-	data = data + "<p>Result is: in ml</p>"
+        data =  "<b>Conversion to ml</b><p></p>"
+        data = data + "<p>" + amount_given + " = "+ str(new_Amount)+" ml</p>"
         data = data + "<p><a href='./'>return to index</a></p>"
 
         start_response('200 OK', list(html_headers))

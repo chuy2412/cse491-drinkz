@@ -22,7 +22,8 @@ except OSError:
 #Copied the drinks from drinkz/test_recipes.py
 ########################################################################
 def add_items():
-	db._reset_db() #Reset database
+        #Reset database
+        db._reset_db()
 
 	db.add_bottle_type('Johnnie Walker', 'black label', 'blended scotch')
 	db.add_to_inventory('Johnnie Walker', 'black label', '500 ml')
@@ -51,9 +52,6 @@ def add_items():
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
 def generate_index():
-        add_items()
-	#data = open('html/index.html', 'w')
-	data = ""
 	data="Drinkz <p><a href='recipes.html'>Recipes</a>"
 	data= data +  """
 	<p>
@@ -76,8 +74,6 @@ def generate_index():
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
 def generate_Recipes():
-	#fp = open('html/recipes.html', 'w')
-
 	data =  "<b>Recipes</b><p></p>"
 	data = data + """ 
 	<table border="1">
@@ -114,8 +110,6 @@ def generate_Recipes():
 #Inventory
 ##############################################################
 def generate_Inventory():
-	#fp = open('html/inventory.html', 'w')
-
 	data =  "<b>Inventory</b><p></p>"
 	data = data +  """ 
 	<table border="1">
@@ -150,8 +144,6 @@ def generate_Inventory():
 #Reference: github.com/ctb/cse491-linkz
 #############################################################
 def generate_Liquor_Types():
-	#fp = open('html/liquor_types.html', 'w')
-
 	data = "<b>Liquor Types</b><p></p>"
 	data = data + """
 	<table border="1">

@@ -25,6 +25,9 @@ html_headers = [('Content-type', 'text/html')]
 class SimpleApp(object):
     def __call__(self, environ, start_response):
 
+	#Add items to the database
+	dynamic_web.add_items()
+
         path = environ['PATH_INFO']
         fn_name = dispatch.get(path, 'error')
 

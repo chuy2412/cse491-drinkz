@@ -184,7 +184,18 @@ class SimpleApp(object):
 
     def rpc_add(self, a, b):
         return int(a) + int(b)
-    
+
+    #HW4_5a JSON-RPC to convert unit to ml
+    def rpc_convert_units_to_ml(self, amount):
+        return unit_conversion.convert_to_ml(amount)
+
+    #HW4_5a JSON-RPC get recipe names
+    def rpc_get_recipe_names(self):
+        return list(db.get_all_recipes())
+
+    #HW4_5a JSON-RPC get liquor inventory
+    def rpc_get_liquor_inventory(self):
+        return dict(db.get_liquor_inventory())    
 def form():
     return """
 <form action='recv'>

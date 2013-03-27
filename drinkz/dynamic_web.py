@@ -75,6 +75,13 @@ def generate_index():
         font-size:14px;
         }
         </style>
+	<script>
+	function myFunction()
+	{
+		alert("Hello! I am an alert box!");
+	}
+	</script>
+	</script>
         </head>
         <body>
         <h1>Drinkz</h1>
@@ -90,6 +97,11 @@ def generate_index():
         <p>
         <a href='convert_to_ml.html'>Convert to ml</a>
         </p>
+
+	<p>
+	<input type="button" onclick="myFunction()" value="Show alert box" />
+	</p>
+
         </body>
         </html>
         """

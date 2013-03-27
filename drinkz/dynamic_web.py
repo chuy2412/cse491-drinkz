@@ -52,7 +52,13 @@ def add_items():
 #load database
 ###############################################################
 def load_database(filename):
-	db.load_db(filename)
+	try:
+		#Try to load from database
+	   	db.load_db(filename)
+
+	except Exception:
+		#If the file was not found add items
+		add_items()
 
 ###############################################################
 #Index

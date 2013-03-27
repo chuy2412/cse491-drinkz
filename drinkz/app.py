@@ -26,7 +26,7 @@ class SimpleApp(object):
     def __call__(self, environ, start_response):
 
 	#load from file
-	dynamic_web.load_database('sample_database')
+	dynamic_web.load_database('bin/sample_database')
 
         path = environ['PATH_INFO']
         fn_name = dispatch.get(path, 'error')

@@ -65,22 +65,35 @@ def load_database(filename):
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
 def generate_index():
-	data="Drinkz <p><a href='recipes.html'>Recipes</a>"
-	data= data +  """
-	<p>
-	<a href='inventory.html'>Inventory</a>
-	</p>
-
-	<p>
-	<a href='liquor_types.html'>Liquor Types</a>
-	</p>
+	data= """
+        <html>
+        <head>
+        <title>Drinkz Home page</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Drinkz</h1>
+        <p><a href='recipes.html'>Recipes</a>
+        <p>
+        <a href='inventory.html'>Inventory</a>
+        </p>
 
         <p>
-	<a href='convert_to_ml.html'>Convert to ml</a>
-	</p>
+        <a href='liquor_types.html'>Liquor Types</a>
+        </p>
 
-	"""
-	return data
+        <p>
+        <a href='convert_to_ml.html'>Convert to ml</a>
+        </p>
+        </body>
+        </html>
+        """
+        return data
 
 ###############################################################
 #Recipes

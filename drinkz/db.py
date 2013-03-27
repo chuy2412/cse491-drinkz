@@ -30,6 +30,8 @@ Additional methods (besides the ones needed for homework):
 import recipes
 import unit_conversion     #HW4_1 to convert the amount to ml
 
+from cPickle import dump, load
+
 # private singleton variables at module level
 _bottle_types_db = set() #Changed to Set
 _inventory_db = {}       #Changed to dictionary
@@ -87,6 +89,23 @@ def _reset_db():
     _inventory_db = {}         #Changed to Dictionary
     _recipe_db = set()      #reset recipe database
 
+
+def save_db(filename):
+    fp = open(filename, 'wb')
+
+    tosave = (_bottle_types_db, _inventory_db)
+    dump(tosave, fp)
+
+    fp.close()
+
+def load_db(filename):
+    global _bottle_types_db, _inventory_db
+    fp = open(filename, 'rb')
+
+    loaded = load(fp)
+    (_bottle_types_db, _inventory_db) = loaded
+
+    fp.close()
 
 # exceptions in Python inherit from Exception and generally don't need to
 # override any methods.

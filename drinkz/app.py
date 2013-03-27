@@ -114,10 +114,28 @@ class SimpleApp(object):
 
         #Generate results in html format
         content_type = 'text/html'
-        data =  "<b>Conversion to ml</b><p></p>"
+        #data =  "<b>Conversion to ml</b><p></p>"
+	data= """
+        <html>
+        <head>
+        <title>Conversion Results</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Result from conversion</h1>
+	"""
+
         data = data + "<p>" + amount_given + " = "+ str(new_Amount)+" ml</p>"
         data = data + "<p><a href='./'>return to index</a></p>"
-
+	data = data + """
+	</body>
+	<html>
+	"""
         start_response('200 OK', list(html_headers))
         return [data]
 

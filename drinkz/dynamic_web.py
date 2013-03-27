@@ -100,7 +100,20 @@ def generate_index():
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
 def generate_Recipes():
-	data =  "<b>Recipes</b><p></p>"
+	data= """
+        <html>
+        <head>
+        <title>View Recipes</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Recipes</h1>
+	"""
 	data = data + """ 
 	<table border="1">
 	<tr>
@@ -129,6 +142,8 @@ def generate_Recipes():
 	</p>
 	<p><a href='liquor_types.html'>Liquor Types</a>
 	</p>
+	</body>
+	</html>
 	"""
         return data
 
@@ -136,7 +151,20 @@ def generate_Recipes():
 #Inventory
 ##############################################################
 def generate_Inventory():
-	data =  "<b>Inventory</b><p></p>"
+	data= """
+        <html>
+        <head>
+        <title>My Inventory</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Inventory</h1>
+	"""
 	data = data +  """ 
 	<table border="1">
 	<tr>
@@ -162,6 +190,8 @@ def generate_Inventory():
 	</p>
 	<p><a href='liquor_types.html'>Liquor Types</a>
 	</p>
+	</body>
+	</html>
 	"""
 	return data
 
@@ -170,7 +200,20 @@ def generate_Inventory():
 #Reference: github.com/ctb/cse491-linkz
 #############################################################
 def generate_Liquor_Types():
-	data = "<b>Liquor Types</b><p></p>"
+	data= """
+        <html>
+        <head>
+        <title>View Liquor Types</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Liquor Types</h1>
+	"""
 	data = data + """
 	<table border="1">
 	<tr>
@@ -193,6 +236,8 @@ def generate_Liquor_Types():
 	</p>
 	<p><a href='inventory.html'>Inventory</a>
 	</p>
+	</body>
+	</html>
 	"""
 	return data
 
@@ -201,7 +246,21 @@ def generate_Liquor_Types():
 #convert_to ml
 ###############################################################
 def convert_to_ml():
-	data = "<b>Convert to ml</b><p></p>"
+	data= """
+        <html>
+        <head>
+        <title>Conversion</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Convert to ml</h1>
+	"""
+
         data = data +  """
         <form action='recv'>
         Amount? <input type='text' name='amount' size'20'>
@@ -211,5 +270,7 @@ def convert_to_ml():
         <p><input type="radio" name="type" value="liter">liter</p>
         <p><input type='submit'></p>
         </form>
+	</body>
+	</html>
         """
         return data

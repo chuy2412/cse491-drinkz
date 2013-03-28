@@ -4,6 +4,7 @@ import urlparse
 import simplejson
 import dynamic_web
 import unit_conversion
+import db
 
 dispatch = {
     '/' : 'index',
@@ -191,7 +192,7 @@ class SimpleApp(object):
 
     #HW4_5a JSON-RPC get recipe names
     def rpc_get_recipe_names(self):
-        return list(db.get_all_recipes())
+        return list(db.get_recipe_names())
 
     #HW4_5a JSON-RPC get liquor inventory
     def rpc_get_liquor_inventory(self):

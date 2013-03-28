@@ -61,6 +61,14 @@ def get_recipe(name):
     #Recipe not found
     return
 
+#Get recipe names
+#Return the name of all recipes in the database
+def get_recipe_names():
+    names = set()
+    for r in _recipe_db:
+	names.add(r.Name)
+    return names
+
 #Return all the recipes
 def get_all_recipes():
     return _recipe_db  #Return all the recipes

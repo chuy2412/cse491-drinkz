@@ -116,7 +116,7 @@ def test_conversion():
     environ = {}
     environ['QUERY_STRING'] = urllib.urlencode(dict(amount='1',
                                                     type='gallon'))
-    environ['PATH_INFO'] = '/recv'
+    environ['PATH_INFO'] = '/recv_convert'
 
     d = {}
     def my_start_response(s, h, return_in=d):

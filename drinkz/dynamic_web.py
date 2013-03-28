@@ -274,7 +274,7 @@ def convert_to_ml():
 	"""
 
         data = data +  """
-        <form action='recv'>
+        <form action='recv_convert'>
         Amount? <input type='text' name='amount' size'20'>
         <p><input type="radio" name="type" value="ml" checked> ml</p>
         <p><input type="radio" name="type" value="oz">oz<br></p>

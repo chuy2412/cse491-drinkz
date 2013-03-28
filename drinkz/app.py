@@ -13,11 +13,8 @@ dispatch = {
     '/inventory.html' : 'inventory',
     '/liquor_types.html' : 'liquor_types',
     '/convert_to_ml.html' : 'convert_to_ml',
-    '/content' : 'somefile',
     '/error' : 'error',
-    '/helmet' : 'helmet',
-    '/form' : 'form',
-    '/recv' : 'recv',
+    '/recv_convert' : 'recv_convert',
     '/rpc'  : 'dispatch_rpc'
 }
 
@@ -69,13 +66,6 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
 
-    def somefile(self, environ, start_response):
-        content_type = 'text/html'
-        data = open('somefile.html').read()
-
-        start_response('200 OK', list(html_headers))
-        return [data]
-
     def error(self, environ, start_response):
         status = "404 Not Found"
         content_type = 'text/html'
@@ -83,21 +73,8 @@ class SimpleApp(object):
        
         start_response('200 OK', list(html_headers))
         return [data]
-
-    def helmet(self, environ, start_response):
-        content_type = 'image/gif'
-        data = open('Spartan-helmet-Black-150-pxls.gif', 'rb').read()
-
-        start_response('200 OK', [('Content-type', content_type)])
-        return [data]
-
-    def form(self, environ, start_response):
-        data = form()
-
-        start_response('200 OK', list(html_headers))
-        return [data]
    
-    def recv(self, environ, start_response):
+    def recv_convert(self, environ, start_response):
         formdata = environ['QUERY_STRING']
         results = urlparse.parse_qs(formdata)
 
@@ -115,7 +92,6 @@ class SimpleApp(object):
 
         #Generate results in html format
         content_type = 'text/html'
-        #data =  "<b>Conversion to ml</b><p></p>"
 	data= """
         <html>
         <head>
@@ -197,14 +173,6 @@ class SimpleApp(object):
     #HW4_5a JSON-RPC get liquor inventory
     def rpc_get_liquor_inventory(self):
         return dict(db.get_liquor_inventory())    
-def form():
-    return """
-<form action='recv'>
-Your first name? <input type='text' name='firstname' size'20'>
-Your last name? <input type='text' name='lastname' size='20'>
-<input type='submit'>
-</form>
-"""
 
 if __name__ == '__main__':
     import random, socket

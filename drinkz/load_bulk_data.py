@@ -14,17 +14,12 @@ from . import db                        # import from local package
 
 def data_reader(fp):
     reader = csv.reader(fp)
-    for line in reader:
-        try:
-            if line[0].startswith('#'):
-                continue
 
-            if not line[0].strip():
-                continue
-        except IndexError:
+    for line in reader:
+        if not line or not line[0].strip() or line[0].startswith('#'):
             continue
-        (mfg, name, val3)= line
-        yield mfg, name, val3
+
+        yield line
         
 
 def load_bottle_types(fp):
@@ -40,16 +35,17 @@ def load_bottle_types(fp):
     new_reader = data_reader(fp)
     x = []
     n = 0
-    while (1):
+    for line in new_reader:
         try:
-            for mfg, name, typ in new_reader:
-                if typ.endswith('ml') or typ.endswith('oz') or typ.endswith('gallon') or typ.endswith('liter'):
-                    continue
-                n += 1
-                db.add_bottle_type(mfg, name, typ)
-            new_reader.next()
-        except StopIteration:
-            return n
+            (mfg, name, typ) = line
+        except ValueError:
+	    print 'Badly formatted line: %s' % line
+	    continue
+
+        n += 1
+        db.add_bottle_type(mfg, name, typ)
+
+    print n
     return n
 
 

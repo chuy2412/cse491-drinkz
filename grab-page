@@ -1,0 +1,38 @@
+import socket, sys
+######################################################################
+#This script takes 2 command line arguments (host and port)
+#Prints out the result of submitting a GET request
+#
+#Reference:
+#    http://effbot.org/zone/socket-intro.htm
+#    "Example: read a document via HTTP (File:httpget1.py)"
+#How to run:
+#   python grab-page http://arctic.cse.msu.edu  portNumber
+#####################################################################
+def main(args):
+    #Check for right number of inputs
+    if len(args) < 3:
+	#Show error message
+        print "Incorrect number of inputs"
+	print "Try: grab-page url port"
+	#Terminate the program
+        return -1
+
+    host = args[1]
+    port = int(args[2])
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((host, port))
+    s.send("GET / HTTP/1.0\r\n\r\n")
+
+    while 1:
+        buf = s.recv(1000)
+        if not buf:
+            break
+        sys.stdout.write(buf)
+
+    s.close()
+    print
+
+if __name__ == '__main__':
+    main(sys.argv)

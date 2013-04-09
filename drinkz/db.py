@@ -73,22 +73,6 @@ def get_recipe_names():
 def get_all_recipes():
     return _recipe_db  #Return all the recipes
 
-def need_ingredients(r):
-    ingredients = r.Ingredient #get the recipe ingredients
-    missing = []
-    for i in ingredients: #for each ingredient
-	#get the type and the amount
-	type = i[0]
-	amount = i[1]
-	need_amount = unit_conversion.convert_to_ml(amount)
-	current_amount = get_liquor_amount_noMix(type)
-        diff = need_amount - current_amount
-	if diff >0:
-		new_amount = diff #str(diff) + ' ml' #to show ml
-		missing.append((type, new_amount))
-
-    #print missing 
-    return missing
 
 def _reset_db():
     "A method only to be used during testing -- toss the existing db info."

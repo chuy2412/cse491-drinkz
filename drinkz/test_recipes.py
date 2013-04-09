@@ -70,14 +70,14 @@ class TestIngredients(object):
         r = recipes.Recipe('scotch on the rocks', [('blended scotch',
                                                    '4 oz')])
 
-        x = db.need_ingredients(r)  #Now db checks missing ingredients
+        x = r.need_ingredients()  #Back to normal
         assert not x, x
 
     def test_need_ingredients_2(self):
         r = recipes.Recipe('vodka martini', [('unflavored vodka', '6 oz'),
                                             ('vermouth', '1.5 oz')])
 
-        x = db.need_ingredients(r) #Now db checks missing ingredients
+        x = r.need_ingredients() #Back to normal
         assert not x, x
 
     def test_need_ingredients_3(self):
@@ -86,7 +86,7 @@ class TestIngredients(object):
                                                      ('vermouth',
                                                       '1.5 oz')])
 
-        missing = db.need_ingredients(r) #Now db checks missing ingredients
+        missing = r.need_ingredients() #Back to normal
         assert missing
         assert len(missing) == 1
 
@@ -96,7 +96,7 @@ class TestIngredients(object):
     def test_generic_replacement(self):
         r = recipes.Recipe('whiskey bath', [('blended scotch', '2 liter')])
 
-        missing = db.need_ingredients(r) #Now db checks missing ingredients
+        missing = r.need_ingredients() #Back to normal
         assert not missing, missing
 
     def test_generic_replacement_fail(self):
@@ -106,7 +106,7 @@ class TestIngredients(object):
         
         r = recipes.Recipe('whiskey bath', [('blended scotch', '6 liter')])
 
-        missing = db.need_ingredients(r) #Now db checks missing ingredients
+        missing = r.need_ingredients() #Back to normal
         assert missing == [('blended scotch', 1000.0)]
 
     def test_generic_replacement_no_mix(self):
@@ -118,5 +118,5 @@ class TestIngredients(object):
         # of blended scotch.
         r = recipes.Recipe('whiskey bath', [('blended scotch', '5.5 liter')])
 
-        missing = db.need_ingredients(r) #Now db checks missing ingredients
+        missing = r.need_ingredients() #Back to normal
         assert missing == [('blended scotch', 500.0)]

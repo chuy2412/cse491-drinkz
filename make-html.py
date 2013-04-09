@@ -83,7 +83,7 @@ print >>fp, """
 #For every recipe in the database
 for r in db._recipe_db:
     possible = 'No'
-    if len(db.need_ingredients(r)) == 0:
+    if len(r.need_ingredients()) == 0:
         possible = 'Yes'
 
     #Display result

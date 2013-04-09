@@ -134,11 +134,10 @@ def generate_Recipes():
 	<th>Enough ingredients?</th>
 	"""
 	#For every recipe in the database
-	for r in db._recipe_db:
+	for r in sorted(db._recipe_db):
 	    possible = 'No'
 	    if len(r.need_ingredients()) == 0:
 	        possible = 'Yes'
-
 	    #Display result
 	    data = data +  "<tr> <td>" + r.Name + " </td> <td>" + str(r.Ingredient) + " </td> <td>" +possible +  " </td> </tr>"
 

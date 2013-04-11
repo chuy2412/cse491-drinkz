@@ -9,11 +9,6 @@ Information:
      as the key and the recipe ingredients as the value
 
 Additional methods (besides the ones needed for homework):
-    The function 'need_ingredients' is now in db instead or recipes
-    because otherwise, every recipe object would have access to the inventory
-    database. Instead, the database has a function need_ingredients and 
-    receives a recipe as an input. Tests cases were changed accordingly
-
     The function 'convert_to_ml(amount)' has been included
     This method receives an amount and converts the amount as ml
     Currently, the valid amounts are: 'oz', 'ml', 'gallon' and 'liter'
@@ -36,6 +31,22 @@ from cPickle import dump, load
 _bottle_types_db = set() #Changed to Set
 _inventory_db = {}       #Changed to dictionary
 _recipe_db = set()       #Added a recipe database as set
+
+
+#Given an inventory and a list of recipes,
+#Return the recipes we can make.
+def check_if_can_make_recipes(recipe_list):
+    can_make = []
+
+    #For every recipe in the list
+    for r in sorted(recipe_list):
+	    #if enough ingredients
+	    if len(r.need_ingredients()) == 0:
+		#Add recipe to the list
+	        can_make.append(r)
+
+    #return the list of recipes that can be done
+    return can_make
 
 
 #Input: a recipe

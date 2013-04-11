@@ -190,6 +190,78 @@ Jose Cuervo,Silver,tequila
     assert db._check_bottle_type_exists('Johnnie Walker', 'Black Label')
     assert n == 2, n
 
+#HW5 1 Test functionality of bulk_load_recipes
+#Test a single recipe with a single ingredient
+def test_bulk_load_recipes_1():
+    #Reset database
+    db._reset_db()
+
+    data = "scotch on the rocks,blended scotch,4 oz"
+    fp = StringIO(data)                 # make this look like a file handle
+    n = load_bulk_data.load_recipes(fp)
+
+    #Check if recipe name has been added to recipe list
+    assert db.check_recipeName('scotch on the rocks')
+    #Check for correct number of recipes
+    assert n == 1, n
+
+#Test a single recipe with 2 ingredients
+def test_bulk_load_recipes_2():
+    #Reset database
+    db._reset_db()
+
+    data = "vomit inducing martini,orange juice,6 oz,vermouth,1.5 oz"
+    fp = StringIO(data)                 # make this look like a file handle
+    n = load_bulk_data.load_recipes(fp)
+    #Check if recipe name has been added to recipe list
+    assert db.check_recipeName('vomit inducing martini')
+    #Check for correct number of recipes
+    assert n == 1, n
+
+#Test for including 3 recipes, added comments and an extra line
+def test_bulk_load_recipes_3():
+    #Reset database
+    db._reset_db()
+
+    data = """#happy comment, sad comment 
+scotch on the rocks,blended scotch,4 oz
+vodka martini,unflavored vodka,6 oz,vermouth,1.5 oz
+whiskey bath,blended scotch,2 liter
+
+"""
+
+    fp = StringIO(data)                 # make this look like a file handle
+    n = load_bulk_data.load_recipes(fp)
+    #Check if recipe name has been added to recipe list
+    assert db.check_recipeName('scotch on the rocks')
+    assert db.check_recipeName('vodka martini')
+    assert db.check_recipeName('whiskey bath')
+    
+    #Check for correct number of recipes
+    assert n == 3, n
+
+#Test for recipe bad format: ingredient amount 
+def test_bulk_load_recipes_bad_format_amount():
+    #Reset database
+    db._reset_db()
+
+    data = """#happy comment, sad comment 
+scotch on the rocks,rocks blended,4
+vodka martini,unflavored vodka,6 oz,vermouth,1.5 oz
+whiskey bath,blended scotch,2 liter
+
+"""
+
+    fp = StringIO(data)                 # make this look like a file handle
+    try:
+    	n = load_bulk_data.load_recipes(fp)
+    	assert 0, "Improper ingredient amount, test should fail"
+
+    except db.ImproperRecipeIngredientAmount:
+    	pass
+Ã
+
+
 def test_script_load_bottle_types_1():
     scriptpath = 'bin/load-liquor-types'
     module = imp.load_source('llt', scriptpath)

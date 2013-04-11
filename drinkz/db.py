@@ -9,6 +9,10 @@ Information:
      as the key and the recipe ingredients as the value
 
 Additional methods (besides the ones needed for homework):
+    Thefunction 'check_recipeName(recipe_Name)' has been included
+    This method receives a recipe name and returns true if 
+    the recipe exist, otherwise, return false
+
     The function 'convert_to_ml(amount)' has been included
     This method receives an amount and converts the amount as ml
     Currently, the valid amounts are: 'oz', 'ml', 'gallon' and 'liter'
@@ -32,6 +36,16 @@ _bottle_types_db = set() #Changed to Set
 _inventory_db = {}       #Changed to dictionary
 _recipe_db = set()       #Added a recipe database as set
 
+
+#Given a recipe name, check if the recipe is on the 
+#recipe database. Returns true if it exists, false otherwise
+def check_recipeName(recipe_Name):
+
+    for r in sorted(_recipe_db):
+	if r.Name ==recipe_Name:
+		return True
+
+    return False
 
 #Given an inventory and a list of recipes,
 #Return the recipes we can make.
@@ -58,6 +72,16 @@ def add_recipe(r):
 	if rec.Name ==r.Name:  #Recipe already exists
 		err = 'Duplicate Recipe'
 		raise DuplicateRecipeName(err)
+
+    #Check for proper format on each ingredient amount
+    for ingredient in r.Ingredient:
+	amt = ingredient[1]
+	print amt
+	#Check for proper amount 
+	if not (amt.endswith('ml') or amt.endswith('oz') or amt.endswith('gallon') or amt.endswith('liter')):
+		err = 'Improper recipe ingredient amount'
+		raise ImproperRecipeIngredientAmount(err)
+
     #New recipe
     #Add recipe in the recipe database
     _recipe_db.add(r)
@@ -117,6 +141,9 @@ class LiquorMissing(Exception):
 
 
 class DuplicateRecipeName(Exception):
+    pass
+
+class ImproperRecipeIngredientAmount(Exception):
     pass
 
 

@@ -99,20 +99,43 @@ def load_recipes(fp):
     n = 0
     for line in new_reader:
         try:
-            (name,ingredients) = line
+	    #get recipe name
+            name = line[0]
+	
+	    #initialize an empty list ingredients
+	    ingredients = []
+
+	    #initialize counter
+	    count =1
+
+	    #ingredients to read
+	    ingredients_to_read = len(line) -1
+
+	    #While there are ingredients to read
+	    while count < ingredients_to_read:
+		#Get ingredient name
+	    	ingredient_name = line[count]
+
+		#Get ingredient amount
+		ingredient_amount = line[count+1]
+
+		#Append ingredients
+		ingredients.append((ingredient_name,ingredient_amount))
+
+		#update counter
+		count = count +2
+
             #Create a recipe
             r = recipes.Recipe(name, ingredients)
+
             #Try to add recipe to database
  	    db.add_recipe(r)
-            
-	    #increment the counter
-            n = n+1
 
         except ValueError:
 	    print 'Badly formatted line: %s' % line
 	    continue
 
-        #increment the counter
+        #increment the counter for recipes added
         n = n+1 
     
     return n

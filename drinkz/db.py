@@ -76,7 +76,7 @@ def add_recipe(r):
     #Check for proper format on each ingredient amount
     for ingredient in r.Ingredient:
 	amt = ingredient[1]
-	print amt
+
 	#Check for proper amount 
 	if not (amt.endswith('ml') or amt.endswith('oz') or amt.endswith('gallon') or amt.endswith('liter')):
 		err = 'Improper recipe ingredient amount'

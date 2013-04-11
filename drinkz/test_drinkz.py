@@ -259,7 +259,6 @@ whiskey bath,blended scotch,2 liter
 
     except db.ImproperRecipeIngredientAmount:
     	pass
-Ã
 
 
 def test_script_load_bottle_types_1():

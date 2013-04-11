@@ -94,6 +94,10 @@ def generate_index():
         <a href='liquor_types.html'>Liquor Types</a>
         </p>
 
+	<p>
+        <a href='add_liquor_types.html'>Add Liquor Types</a>
+        </p>
+
         <p>
         <a href='convert_to_ml.html'>Convert to ml</a>
         </p>
@@ -251,6 +255,43 @@ def generate_Liquor_Types():
 	</html>
 	"""
 	return data
+
+#############################################################
+#Add liquor_types
+#Reference: github.com/ctb/cse491-linkz
+#############################################################
+def add_Liquor_Types():
+        data= """
+        <html>
+        <head>
+        <title>Add Liquor Types</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Enter Liquor Types</h1>
+        """
+        data = data + """
+        
+        <form action='recv_add_liquor_types'>
+        Manufacturer: <input type='text' name='mfg' size'20'>
+        Liquor: <input type='text' name='liquor' size'20'>
+	Type: <input type='text' name='typ' size'20'>
+        <p><input type='submit'></p>
+	</form>
+
+	Link to to home:
+	<p><a href='index.html'>Back to Index</a>
+        </body>
+        </html>
+        """
+        return data
+
+
 
 
 ###############################################################

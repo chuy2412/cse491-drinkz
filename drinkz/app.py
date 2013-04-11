@@ -12,8 +12,10 @@ dispatch = {
     '/recipes.html' : 'recipes',
     '/inventory.html' : 'inventory',
     '/liquor_types.html' : 'liquor_types',
+    '/add_liquor_types.html' : 'add_liquor_types',
     '/convert_to_ml.html' : 'convert_to_ml',
     '/error' : 'error',
+    '/recv_add_liquor_types' : 'recv_add_liquor_types',
     '/recv_convert' : 'recv_convert',
     '/rpc'  : 'dispatch_rpc'
 }
@@ -24,7 +26,7 @@ class SimpleApp(object):
     def __call__(self, environ, start_response):
 
 	#load from file
-	dynamic_web.load_database('bin/sample_database')
+	#dynamic_web.load_database('newDB')
 
         path = environ['PATH_INFO']
         fn_name = dispatch.get(path, 'error')
@@ -61,6 +63,11 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
 
+    def add_liquor_types(self, environ, start_response):
+        data = dynamic_web.add_Liquor_Types()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
     def convert_to_ml(self, environ, start_response):
         data = dynamic_web.convert_to_ml()
         start_response('200 OK', list(html_headers))
@@ -74,6 +81,51 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
    
+    def recv_add_liquor_types(self, environ, start_response):
+	formdata = environ['QUERY_STRING']
+        results = urlparse.parse_qs(formdata)
+
+        #Get manufacturer
+        mfg = results['mfg'][0]
+        #Get liquor name
+        liquor = results['liquor'][0]
+	#Get type
+	typ = results['typ'][0]
+  
+	if (db._check_bottle_type_exists(mfg,liquor)):
+		message = "Ooops Manufacturer and Liquor information was already there"
+	else:
+		#Add bottle type
+		db.add_bottle_type(mfg,liquor,typ)
+		message = "Liquor type has been added successfully"
+
+        #Generate results in html format
+        content_type = 'text/html'
+        data= """
+        <html>
+        <head>
+        <title>Liquor Type Added</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+	</head>
+        <body>
+	"""
+        data = data + "<h1>" + message + "</h1>"
+	tmp = dynamic_web.generate_liquor_type_table()
+	data = data + tmp
+	data = data + "<p><a href='./add_liquor_types.html'>add another liquor type</a></p>"
+        data = data + "<p><a href='./'>return to index</a></p>"
+        data = data + """
+        </body>
+        <html>
+        """
+        start_response('200 OK', list(html_headers))
+        return [data]
+
     def recv_convert(self, environ, start_response):
         formdata = environ['QUERY_STRING']
         results = urlparse.parse_qs(formdata)
@@ -177,7 +229,8 @@ class SimpleApp(object):
 if __name__ == '__main__':
     import random, socket
     port = random.randint(8000, 9999)
-    
+    #load from file
+    dynamic_web.load_database('newDB')
     app = SimpleApp()
     
     httpd = make_server('', port, app)

@@ -24,6 +24,10 @@ def test_index():
     assert status == '200 OK'
 
 def test_recipes():
+
+    #load from file
+    dynamic_web.load_database('bin/sample_database')
+    
     environ = {}
     environ['PATH_INFO'] = '/recipes.html'
 

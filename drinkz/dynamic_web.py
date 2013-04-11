@@ -59,6 +59,8 @@ def load_database(filename):
 	except Exception:
 		#If the file was not found add items
 		add_items()
+		print 'Added db'
+		pass
 
 ###############################################################
 #Index
@@ -163,6 +165,30 @@ def generate_Recipes():
         return data
 
 #############################################################
+#inventory_Table
+#############################################################
+def generate_inventory_table():
+	data = """ 
+	<table border="1">
+	<tr>
+	<th>Manufacturer</th>
+	<th>Liquor Type</th>"
+	<th>Amount</th>
+	"""
+	for mfg, liquor in db.get_liquor_inventory():
+    		#Get the amount in ml 
+    		amt = db.get_liquor_amount(mfg,liquor)
+    		amount = str(amt) + ' ml'
+    		data = data +  "<tr> <td>" + mfg + "</td> <td>"+ liquor + "</td> <td>"+ amount+ " </td> </tr>"
+
+	data = data + """
+	</table>
+	</tr>
+	</table>
+	"""
+	return data
+
+#############################################################
 #Inventory
 ##############################################################
 def generate_Inventory():
@@ -187,7 +213,7 @@ def generate_Inventory():
 	<th>Liquor Type</th>"
 	<th>Amount</th>
 	"""
-	for mfg, liquor in db.get_liquor_inventory():
+	for mfg, liquor in sorted(db.get_liquor_inventory()):
     		#Get the amount in ml 
     		amt = db.get_liquor_amount(mfg,liquor)
     		amount = str(amt) + ' ml'
@@ -207,6 +233,27 @@ def generate_Inventory():
 	</p>
 	</body>
 	</html>
+	"""
+	return data
+
+#############################################################
+#generate_liquor_type_table
+#############################################################
+def generate_liquor_type_table():
+	data = """
+        <table border="1">
+        <tr>
+        <th>Manufacturer</th>
+        <th>Liquor</th>"
+        <th>Type</th>
+        """
+        for (mfg, liquor, type) in sorted(db._bottle_types_db):
+                data = data + "<tr> <td>" + mfg+ "</td> <td>" +liquor+" </td> <td>"+type+" </td> </tr>"
+
+        data = data +  """
+        </table>
+        </tr>
+        </table>
 	"""
 	return data
 
@@ -236,7 +283,7 @@ def generate_Liquor_Types():
 	<th>Liquor</th>"
 	<th>Type</th>
 	"""
-	for (mfg, liquor, type) in db._bottle_types_db:
+	for (mfg, liquor, type) in sorted(db._bottle_types_db):
     		data = data + "<tr> <td>" + mfg+ "</td> <td>" +liquor+" </td> <td>"+type+" </td> </tr>"
 
 	data = data +  """

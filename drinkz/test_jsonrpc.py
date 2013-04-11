@@ -69,6 +69,9 @@ def test_convert_units_to_ml():
 #Check for all recipe names from the sample database
 #############################################################################
 def test_get_recipe_names():
+    #load from file
+    dynamic_web.load_database('bin/sample_database')
+
     s, h, result = call_remote('get_recipe_names', [])
 
     #Check for valid status

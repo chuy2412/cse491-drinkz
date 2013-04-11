@@ -11,6 +11,7 @@ Module to load in bulk data from text files.
 import csv                              # Python csv package
 
 from . import db                        # import from local package
+from . import recipes
 
 def data_reader(fp):
     reader = csv.reader(fp)
@@ -78,3 +79,42 @@ def load_inventory(fp):
         except StopIteration:
             return n
     return n
+
+
+#5.1b: Implement bulk loading of recipes from the command line.
+def load_recipes(fp):
+    """
+    Loads in data of the form recipe_Name, recipe_Ingredient from a CSV file.
+    Note: recipe_Ingredient is a list of ingredients. Every ingredient
+          contains (ingredient_name, amount)
+
+    Takes a file pointer.
+
+    Adds data to database.
+
+    Returns number of valid recipes loaded correctly
+    """
+    new_reader = data_reader(fp)
+    x = []
+    n = 0
+    for line in new_reader:
+        try:
+            (name,ingredients) = line
+            #Create a recipe
+            r = recipes.Recipe(name, ingredients)
+            #Try to add recipe to database
+ 	    db.add_recipe(r)
+            
+	    #increment the counter
+            n = n+1
+
+        except ValueError:
+	    print 'Badly formatted line: %s' % line
+	    continue
+
+        #increment the counter
+        n = n+1 
+    
+    return n
+
+

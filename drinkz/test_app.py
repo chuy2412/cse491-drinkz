@@ -58,6 +58,9 @@ def test_recipes():
     assert status == '200 OK'
 
 def test_inventory():
+    #load from file
+    dynamic_web.load_database('bin/sample_database')
+
     environ = {}
     environ['PATH_INFO'] = '/inventory.html'
 
@@ -88,6 +91,9 @@ def test_inventory():
     assert status == '200 OK'
 
 def test_liquor_types():
+    #load from file
+    dynamic_web.load_database('bin/sample_database')
+
     environ = {}
     environ['PATH_INFO'] = '/liquor_types.html'
 

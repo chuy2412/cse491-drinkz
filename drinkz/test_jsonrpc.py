@@ -98,6 +98,9 @@ def test_get_recipe_names():
 #Check for correct content on the inventory
 #############################################################################
 def test_get_liquor_inventory():
+    #load from file
+    dynamic_web.load_database('bin/sample_database')
+
     s, h, result = call_remote('get_liquor_inventory', [])
 
     #Check for valid status

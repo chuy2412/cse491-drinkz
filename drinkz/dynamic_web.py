@@ -91,8 +91,10 @@ def generate_index():
         <p> <font size="04">Recipes:</font></p>
         <p>  
         <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        <a href='recipes.html'>View Recipes</a> 
-        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='recipes.html'>View all recipes</a> 
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+	<a href='recipes_we_can_make.html'>View recipes we can make</a>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
         <a href='add_recipe.html'>Add recipe</a>
         </p>
 
@@ -171,6 +173,76 @@ def generate_recipe_table():
 #Recipes
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
+def generate_Recipes_we_can_make():
+	data= """
+        <html>
+        <head>
+        <title>Recipes we can make</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Recipes we can make</h1>
+	"""
+	data = data + generate_recipe_we_can_make_table()
+	data = data + """
+	Other links:
+	<p><a href='index.html'>Back to Index</a>
+	</p>
+        <p><a href='add_recipe.html'>Add recipe</a>
+        </p>
+	<p><a href='inventory.html'>Inventory</a>
+	</p>
+	<p><a href='liquor_types.html'>Liquor Types</a>
+	</p>
+	</body>
+	</html>
+	"""
+        return data
+
+###############################################################
+#generate_recipe_we_can_make_table
+#Reference: github.com/ctb/cse491-linkz
+###############################################################
+def generate_recipe_we_can_make_table():
+        data = """ 
+        <table border="1">
+        <tr>
+        <th>Recipe Name</th>
+        <th>Ingredients</th>
+        """
+        #For every recipe in the database
+        for r in sorted(db._recipe_db):
+            if len(r.need_ingredients()) == 0:
+            	#Display result
+            	data = data +  "<tr> <td>" + r.Name + " </td><td>"
+	    	data = data + """
+	    	<table border="1">
+            	<tr>
+            	<th>Ingredient Name</th>
+            	<th>Amount</th>
+	    	"""
+	    	#for each tuple
+	    	for i in r.Ingredient:
+			name = i[0]
+			amount = i[1]
+			data = data + "<tr><td>"+name + "</td> <td>" + amount + "</td></tr>"
+            	data = data +"</table>< </tr> </td>"
+
+
+        data = data +  """
+        </tr>
+        </table>
+	"""
+	return data
+###############################################################
+#Recipes
+#Reference: github.com/ctb/cse491-linkz
+###############################################################
 def generate_Recipes():
 	data= """
         <html>
@@ -188,7 +260,7 @@ def generate_Recipes():
 	"""
 	data = data + generate_recipe_table()
 	data = data + """
-	Link to the other three files:
+	Other links:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
         <p><a href='add_recipe.html'>Add recipe</a>
@@ -286,7 +358,7 @@ def generate_Inventory():
 	"""
 	data = data + generate_inventory_table()
 	data = data + """
-	Link to the other three files:
+	Other links:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
         <p><a href='add_liquor_inventory.html'>Add liquor to inventory</a>
@@ -378,7 +450,7 @@ def generate_Liquor_Types():
 	data = data + generate_liquor_type_table()
 	data = data + """
 
-	Link to the other three files:
+	Other links:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
         <p><a href='add_liquor_types.html'>Add liquor types</a>

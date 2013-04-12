@@ -11,6 +11,7 @@ dispatch = {
     '/' : 'index',
     '/index.html' : 'index',
     '/recipes.html' : 'recipes',
+    '/recipes_we_can_make.html' : 'recipes_we_can_make',
     '/inventory.html' : 'inventory',
     '/liquor_types.html' : 'liquor_types',
     '/add_liquor_types.html' : 'add_liquor_types',
@@ -54,6 +55,11 @@ class SimpleApp(object):
         
     def recipes(self, environ, start_response):
         data = dynamic_web.generate_Recipes()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+    def recipes_we_can_make(self, environ, start_response):
+        data = dynamic_web.generate_Recipes_we_can_make()
         start_response('200 OK', list(html_headers))
         return [data]
 

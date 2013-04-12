@@ -87,21 +87,35 @@ def generate_index():
         </head>
         <body>
         <h1>Drinkz</h1>
-        <p><a href='recipes.html'>Recipes</a>
-        <p>
-        <a href='inventory.html'>Inventory</a>
+       
+        <p> <font size="04">Recipes:</font></p>
+        <p>  
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='recipes.html'>View Recipes</a> 
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='add_recipe.html'>Add recipe</a>
         </p>
 
-        <p>
-        <a href='liquor_types.html'>Liquor Types</a>
+        <p> <font size="04">Inventory:</font></p>
+        <p>  
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='inventory.html'>View Inventory</a> 
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='add_liquor_inventory.html'>Add liquor to inventory</a>
         </p>
 
-	<p>
-        <a href='add_liquor_types.html'>Add Liquor Types</a>
+	<p> <font size="04">Liquor Types:</font></p>
+        <p>  
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='liquor_types.html'>View liquor types</a> 
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='add_liquor_types.html'>Add liquor to inventory</a>
         </p>
 
-        <p>
-        <a href='convert_to_ml.html'>Convert to ml</a>
+        <p> <font size="04">Conversion:</font></p>
+        <p>  
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='convert_to_ml.html'>Convert to ml</a> 
         </p>
 
 	<p>
@@ -136,7 +150,7 @@ def generate_Recipes():
 	<table border="1">
 	<tr>
 	<th>Recipe Name</th>
-	<th>Ingredients</th>"
+	<th>Ingredients</th>
 	<th>Enough ingredients?</th>
 	"""
 	#For every recipe in the database
@@ -172,7 +186,7 @@ def generate_inventory_table():
 	<table border="1">
 	<tr>
 	<th>Manufacturer</th>
-	<th>Liquor Type</th>"
+	<th>Liquor Type</th>
 	<th>Amount</th>
 	"""
 	for mfg, liquor in db.get_liquor_inventory():
@@ -210,7 +224,7 @@ def generate_Inventory():
 	<table border="1">
 	<tr>
 	<th>Manufacturer</th>
-	<th>Liquor Type</th>"
+	<th>Liquor Type</th>
 	<th>Amount</th>
 	"""
 	for mfg, liquor in sorted(db.get_liquor_inventory()):
@@ -237,14 +251,49 @@ def generate_Inventory():
 	return data
 
 #############################################################
-#generate_liquor_type_table
+#Add liquor_inventory
+#Reference: github.com/ctb/cse491-linkz
 #############################################################
+def add_Liquor_Inventory():
+        data= """
+        <html>
+        <head>
+        <title>Add Liquor Inventory</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Enter Liquor Inventory</h1>
+        """
+        data = data + """
+        
+        <form action='recv_add_liquor_inventory'>
+        Manufacturer: <input type='text' name='mfg' size'20'>
+        Liquor: <input type='text' name='liquor' size'20'>
+	Amount: <input type='text' name='amt' size'20'>
+        <p><input type='submit'></p>
+	</form>
+
+	Link to to home:
+	<p><a href='index.html'>Back to Index</a>
+        </body>
+        </html>
+        """
+        return data
+
+#############################################################
+#generate_liquor_type_table
+############################################################
 def generate_liquor_type_table():
 	data = """
         <table border="1">
         <tr>
         <th>Manufacturer</th>
-        <th>Liquor</th>"
+        <th>Liquor</th>
         <th>Type</th>
         """
         for (mfg, liquor, type) in sorted(db._bottle_types_db):
@@ -280,7 +329,7 @@ def generate_Liquor_Types():
 	<table border="1">
 	<tr>
 	<th>Manufacturer</th>
-	<th>Liquor</th>"
+	<th>Liquor</th>
 	<th>Type</th>
 	"""
 	for (mfg, liquor, type) in sorted(db._bottle_types_db):
@@ -337,9 +386,6 @@ def add_Liquor_Types():
         </html>
         """
         return data
-
-
-
 
 ###############################################################
 #convert_to ml

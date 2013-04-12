@@ -13,9 +13,11 @@ dispatch = {
     '/inventory.html' : 'inventory',
     '/liquor_types.html' : 'liquor_types',
     '/add_liquor_types.html' : 'add_liquor_types',
+    '/add_liquor_inventory.html' : 'add_liquor_inventory',
     '/convert_to_ml.html' : 'convert_to_ml',
     '/error' : 'error',
     '/recv_add_liquor_types' : 'recv_add_liquor_types',
+    '/recv_add_liquor_inventory' : 'recv_add_liquor_inventory',
     '/recv_convert' : 'recv_convert',
     '/rpc'  : 'dispatch_rpc'
 }
@@ -68,6 +70,11 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
 
+    def add_liquor_inventory(self, environ, start_response):
+        data = dynamic_web.add_Liquor_Inventory()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
     def convert_to_ml(self, environ, start_response):
         data = dynamic_web.convert_to_ml()
         start_response('200 OK', list(html_headers))
@@ -84,27 +91,34 @@ class SimpleApp(object):
     def recv_add_liquor_types(self, environ, start_response):
 	formdata = environ['QUERY_STRING']
         results = urlparse.parse_qs(formdata)
-
-        #Get manufacturer
-        mfg = results['mfg'][0]
-        #Get liquor name
-        liquor = results['liquor'][0]
-	#Get type
-	typ = results['typ'][0]
+	msg = "No values were modified"
+	#Check if values have data
+	if ( ('mfg' in results) and ('liquor' in results) and ('typ' in results)):
+        	#Get manufacturer
+		mfg = results['mfg'][0]
+        	#Get liquor name
+        	liquor = results['liquor'][0]
+		#Get type
+		typ = results['typ'][0]
   
-	if (db._check_bottle_type_exists(mfg,liquor)):
-		message = "Ooops Manufacturer and Liquor information was already there"
+		if (db._check_bottle_type_exists(mfg,liquor)):
+			message = "Ooops Manufacturer and Liquor information was already there"
+		else:
+			#Add bottle type
+			db.add_bottle_type(mfg,liquor,typ)
+			message = "Liquor type has been added successfully"
+			msg = "Liquor type has been added"
+
+	#At least one of the fields is empty
 	else:
-		#Add bottle type
-		db.add_bottle_type(mfg,liquor,typ)
-		message = "Liquor type has been added successfully"
+		message = "Ooops at least one of the fields is empty"
 
         #Generate results in html format
         content_type = 'text/html'
         data= """
         <html>
         <head>
-        <title>Liquor Type Added</title>
+        <title>Updated Liquor Type</title>
         <style type='text/css'>
         h1 {color:red;}
         body{
@@ -115,6 +129,7 @@ class SimpleApp(object):
         <body>
 	"""
         data = data + "<h1>" + message + "</h1>"
+	data = data + msg 
 	tmp = dynamic_web.generate_liquor_type_table()
 	data = data + tmp
 	data = data + "<p><a href='./add_liquor_types.html'>add another liquor type</a></p>"
@@ -126,12 +141,75 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
 
+    def recv_add_liquor_inventory(self, environ, start_response):
+        formdata = environ['QUERY_STRING']
+        results = urlparse.parse_qs(formdata)
+	msg = ""
+	status = "No values were modified\n"
+	#Check if values have data
+        if ( ('mfg' in results) and ('liquor' in results) and ('amt' in results)):
+	        #Get manufacturer
+        	mfg = results['mfg'][0]
+        	#Get liquor name
+        	liquor = results['liquor'][0]
+        	#Get amount
+        	amt = results['amt'][0]
+ 
+		#Check if bottle type information is there
+        	if not (db._check_bottle_type_exists(mfg,liquor)):
+                	message = "Ooops Please add manufacturer and liquor information to bottle types first"
+		
+        	else:
+			#check if amount unit is correct
+			if not (amt.endswith('ml') or amt.endswith('oz') or amt.endswith('gallon') or amt.endswith('liter')):
+				message = "Ooops unit amount is not correct. "
+				msg = "Valid units: 'ml','oz','gallon','liter'"
+			else:
+                		#Add to inventory
+                		db.add_to_inventory(mfg,liquor, amt)
+                		message = "Added to inventory successfully"
+				status = "Updated inventory\n"
+
+	else:
+		message = "Ooops at least one of the fields is empty"
+
+        #Generate results in html format
+        content_type = 'text/html'
+        data= """
+        <html>
+        <head>
+        <title>Updated inventory</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        """
+        data = data + "<h1>" + message + "</h1>"
+        tmp = dynamic_web.generate_inventory_table()
+        data = data + msg + "<p>" + status + "</p>" + tmp
+	
+        data = data + "<p><a href='./add_liquor_inventory.html'>add another liquor to inventory</a></p>"
+        data = data + "<p><a href='./'>return to index</a></p>"
+        data = data + """
+        </body>
+        <html>
+        """
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+
     def recv_convert(self, environ, start_response):
         formdata = environ['QUERY_STRING']
         results = urlparse.parse_qs(formdata)
-
-        #Get the amount
-        Amount = results['amount'][0]       
+	Amount = "0"
+	if ('amount' in results):
+        	#Get the amount
+        	Amount = results['amount'][0] 
+      
 	#Get the type (oz, ml, liter, gallon)
         Type = results['type'][0]
         

@@ -28,6 +28,12 @@ Additional methods (besides the ones needed for homework):
 """
 import recipes
 import unit_conversion     #HW4_1 to convert the amount to ml
+import cost
+import sys
+import os.path
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 
 from cPickle import dump, load
 
@@ -35,7 +41,7 @@ from cPickle import dump, load
 _bottle_types_db = set() #Changed to Set
 _inventory_db = {}       #Changed to dictionary
 _recipe_db = set()       #Added a recipe database as set
-
+_cost_db = cost.Cost()   #New dictionary list of drink costs
 
 #Given a recipe name, check if the recipe is on the 
 #recipe database. Returns true if it exists, false otherwise
@@ -230,17 +236,35 @@ def get_liquor_amount(mfg, liquor):
     "Retrieve the total amount of any given liquor currently in inventory."
     amounts = []
     totalVolume = 0.0
+    #Previous
     if((mfg,liquor)) in _inventory_db:
         for bottle_amount in _inventory_db[mfg,liquor]:
-            amounts.append(bottle_amount) #add amount
+           amounts.append(bottle_amount) #add amount
+
+    #Current
+    #for item in _inventory_db:
+	#if is on inventory
+#	print item[0] + "kuriboh" + item[1]
+#	if((mfg.lower() ==item[0].lower()) and (liquor.lower()==item[1].lower())):
+ #       	for bottle_amount in (_inventory_db[item[0],item[1]]):
+#		    print bottle_amount
+ #         	    amounts.append(bottle_amount) #add amount
 
     for bottle in amounts:
         totalVolume += unit_conversion.convert_to_ml(bottle)  #Now calls the function convert_to_ml
 					     #to make sure the function works
 
+    
     return totalVolume
 
 def get_liquor_inventory():
     "Retrieve all liquor types in inventory, in tuple form: (mfg, liquor)."
     for key in sorted(_inventory_db):
         yield key
+
+def cost_search_drink_type(typ):
+    return _cost_db.search_type(typ)
+
+def get_all_drinks_cost():
+    return _cost_db.get_all_drinks_cost()
+

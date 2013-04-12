@@ -68,7 +68,7 @@ sg1
 ccopy_reg
 _reconstructor
 p37
-(cdrinkz.recipes
+(crecipes
 Recipe
 p38
 c__builtin__
@@ -78,32 +78,32 @@ NtRp40
 (dp41
 S'Name'
 p42
-S'vomit inducing martini'
+S'scotch on the rocks'
 p43
 sS'Ingredient'
 p44
 (lp45
-(S'orange juice'
+(g5
+S'4 oz'
 p46
-S'6 oz'
-p47
-tp48
-a(g16
-S'1.5 oz'
-p49
-tp50
+tp47
 asbag37
 (g38
 g39
-NtRp51
-(dp52
+NtRp48
+(dp49
 g42
-S'whiskey bath'
-p53
+S'vomit inducing martini'
+p50
 sg44
-(lp54
-(g5
-S'2 liter'
+(lp51
+(S'orange juice'
+p52
+S'6 oz'
+p53
+tp54
+a(g16
+S'1.5 oz'
 p55
 tp56
 asbag37
@@ -112,12 +112,12 @@ g39
 NtRp57
 (dp58
 g42
-S'scotch on the rocks'
+S'whiskey bath'
 p59
 sg44
 (lp60
 (g5
-S'4 oz'
+S'2 liter'
 p61
 tp62
 asbag37
@@ -131,10 +131,10 @@ p65
 sg44
 (lp66
 (g9
-g47
+g53
 tp67
 a(g16
-g49
+g55
 tp68
 asbatRp69
 tp70

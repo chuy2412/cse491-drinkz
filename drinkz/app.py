@@ -18,12 +18,15 @@ dispatch = {
     '/add_liquor_inventory.html' : 'add_liquor_inventory',
     '/add_recipe.html' : 'add_recipe',
     '/convert_to_ml.html' : 'convert_to_ml',
+    '/generate_drink_cost.html' : 'generate_drink_cost',
     '/error' : 'error',
     '/recv_add_liquor_types' : 'recv_add_liquor_types',
     '/recv_add_liquor_inventory' : 'recv_add_liquor_inventory',
     '/recv_add_recipe' : 'recv_add_recipe',
+    '/recv_search_drink_price' : 'recv_search_drink_price', 
     '/recv_convert' : 'recv_convert',
-    '/rpc'  : 'dispatch_rpc'
+    '/rpc'  : 'dispatch_rpc',
+    '/search_drink_price.html' : 'search_drink_price'
 }
 
 html_headers = [('Content-type', 'text/html')]
@@ -92,6 +95,17 @@ class SimpleApp(object):
         data = dynamic_web.convert_to_ml()
         start_response('200 OK', list(html_headers))
         return [data]
+
+    def	generate_drink_cost(self, environ, start_response):
+	data = dynamic_web.generate_drink_cost()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+    def search_drink_price(self, environ, start_response):
+	data = dynamic_web.search_drink_price()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
 
     def error(self, environ, start_response):
         status = "404 Not Found"
@@ -283,6 +297,51 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
 
+    def recv_search_drink_price(self, environ, start_response):
+        formdata = environ['QUERY_STRING']
+        results = urlparse.parse_qs(formdata)
+        search_results = set()
+        #Check if values have data
+        if ('type' in results):
+                #Get type
+                type = results['type'][0]
+ 
+                #Search for given type
+                search_results = db.search_drink_price(type)
+                message = "Search results for: " + type
+
+        #Empty field
+        else:
+                message = "Ooops no value was entered, please try again"
+
+        #Generate results in html format
+        content_type = 'text/html'
+        data= """
+        <html>
+        <head>
+        <title>Results of liquor prices</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        """
+        data = data + "<h1>" + message + "</h1>"
+        data = data + msg
+        tmp = dynamic_web.generate_drink_cost_table(search_results)
+        data = data + tmp
+        data = data + "<p><a href='./search_drink_price.html'>Search for another drink</a></p>"
+        data = data + "<p><a href='./'>return to index</a></p>"
+        data = data + """
+        </body>
+        <html>
+        """
+        start_response('200 OK', list(html_headers))
+        return [data]
+
 
     def recv_convert(self, environ, start_response):
         formdata = environ['QUERY_STRING']
@@ -407,7 +466,8 @@ if __name__ == '__main__':
     import random, socket
     port = random.randint(8000, 9999)
     #load from file
-    dynamic_web.load_database('newDB')
+    dynamic_web.load_database('/../bin/drinkz_database')
+    #dynamic_web.save_database('/../bin/drinkz_database')
     app = SimpleApp()
     
     httpd = make_server('', port, app)

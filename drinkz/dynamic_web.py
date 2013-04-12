@@ -3,19 +3,9 @@ import unit_conversion
 import db      #Import database
 import recipes #Import recipe class
 import os
-
-#Reference: github.com/ctb/cse491-linkz
-try:
-    os.mkdir('html')
-except OSError:
-    # already exists
-    pass
-
-try:
-    os.mkdir('html/subdir')
-except OSError:
-    # already exists
-    pass
+import sys
+import os.path
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 ########################################################################
 #Add items to the inventory
@@ -54,13 +44,28 @@ def add_items():
 def load_database(filename):
 	try:
 		#Try to load from database
-	   	db.load_db(filename)
+		f_name = os.path.dirname(__file__) + filename
+	   	db.load_db(f_name)
+		print "Loaded from database"
 
 	except Exception:
 		#If the file was not found add items
 		add_items()
 		print 'Added db'
 		pass
+
+###############################################################
+#save database
+###############################################################
+def save_database(filename):
+	try:
+               #Try to save database
+               f_name = os.path.dirname(__file__) + filename
+               db.save_db(f_name)
+	       print "Saved database"
+
+	except:
+		print "Unable to save database"
 
 ###############################################################
 #Index
@@ -114,11 +119,19 @@ def generate_index():
         <a href='add_liquor_types.html'>Add liquor types</a>
         </p>
 
+        <p> <font size="04">Prices:</font></p>
+        <p>  
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='generate_drink_cost.html'>View drink prices</a> 
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='search_drink_price.html'>Search price of drink type</a>
+        </p>       
+
         <p> <font size="04">Conversion:</font></p>
         <p>  
         <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
         <a href='convert_to_ml.html'>Convert to ml</a> 
-        </p>
+        </p>	
 
 	<p>
 	<input type="button" onclick="myFunction()" value="Show alert box" />
@@ -142,10 +155,13 @@ def generate_recipe_table():
         <th>Enough ingredients?</th>
         """
         #For every recipe in the database
-        for r in sorted(db._recipe_db):
+        for r in sorted(db._recipe_db, key=lambda tup: tup.Name):
             possible = 'No'
-            if len(r.need_ingredients()) == 0:
+	    missing = r.need_ingredients()
+            if len(missing) == 0:
                 possible = 'Yes'
+	    #else:
+	    #	print missing
             #Display result
             data = data +  "<tr> <td>" + r.Name + " </td>  <td>"
 	    data = data + """
@@ -170,7 +186,7 @@ def generate_recipe_table():
 	return data
 
 ###############################################################
-#Recipes
+#Recipes we can make
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
 def generate_Recipes_we_can_make():
@@ -531,3 +547,100 @@ def convert_to_ml():
 	</html>
         """
         return data
+
+#############################################################
+#generate_drink_cost_table
+############################################################
+def generate_drink_cost_table(cost_list):
+        data = """
+        <table border="1">
+        <tr>
+        <th>Drink type</th>
+        <th>Brand</th>
+        <th>size</th>
+	<th>price</th>
+        """
+        for i in cost_list:
+		(t,code,brand,size,age,proof,price)=i
+		data += "<tr>"
+                data += "<td>" + t + "</td>"
+		data += "<td>" + brand + "</td>" 
+		data += "<td>" + size  + "</td>"
+		data += "<td>" + price + "</td>"
+		data += "</tr>"
+        data +=  """
+        </table>
+        </tr>
+        </table>
+        """
+        return data
+
+#############################################################
+#generate_drink_cost
+#Generate a table containing drink costs
+##############################################################
+def generate_drink_cost():
+        data= """
+        <html>
+        <head>
+        <title>Cost of drinks</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>View Cost of drinks</h1>
+        """
+	cost_list = db.get_all_drinks_cost()
+        data = data + generate_drink_cost_table(cost_list)
+        data = data + """
+        Other links:
+        <p><a href='index.html'>Back to Index</a>
+        </p>
+        <p><a href='recipes.html'>Recipes</a>
+        </p>
+        <p><a href='liquor_types.html'>Liquor Types</a>
+        </p>
+        </body>
+        </html>
+        """
+        return data
+
+#############################################################
+#search_drink_price()
+#Generate a table containing drink costs
+##############################################################
+def search_drink_price():
+        data= """
+        <html>
+        <head>
+        <title>Search drink prices</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Search liquor type</h1>
+        """
+        data = data + """
+
+        <form action='recv_search_drink_price'>
+        Liquor type: <input type='text' name='type' size'20'>
+        <a><input type='submit'></a>
+        <p> Example: tequila, vodka, whisky</p>
+        </form>
+        <p><p>&nbsp;</p></p>
+
+        Link to to home:
+        <p><a href='index.html'>Back to Index</a>
+        </body>
+        </html>
+        """
+        return data
+

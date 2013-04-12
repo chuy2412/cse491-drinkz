@@ -14,10 +14,12 @@ dispatch = {
     '/liquor_types.html' : 'liquor_types',
     '/add_liquor_types.html' : 'add_liquor_types',
     '/add_liquor_inventory.html' : 'add_liquor_inventory',
+    '/add_recipe.html' : 'add_recipe',
     '/convert_to_ml.html' : 'convert_to_ml',
     '/error' : 'error',
     '/recv_add_liquor_types' : 'recv_add_liquor_types',
     '/recv_add_liquor_inventory' : 'recv_add_liquor_inventory',
+    '/recv_add_recipe' : 'recv_add_recipe',
     '/recv_convert' : 'recv_convert',
     '/rpc'  : 'dispatch_rpc'
 }
@@ -54,7 +56,6 @@ class SimpleApp(object):
         start_response('200 OK', list(html_headers))
         return [data]
 
-
     def inventory(self, environ, start_response):
         data = dynamic_web.generate_Inventory()
         start_response('200 OK', list(html_headers))
@@ -72,6 +73,11 @@ class SimpleApp(object):
 
     def add_liquor_inventory(self, environ, start_response):
         data = dynamic_web.add_Liquor_Inventory()
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+    def add_recipe(self, environ, start_response):
+        data = dynamic_web.add_Recipe()
         start_response('200 OK', list(html_headers))
         return [data]
 
@@ -193,6 +199,74 @@ class SimpleApp(object):
         data = data + msg + "<p>" + status + "</p>" + tmp
 	
         data = data + "<p><a href='./add_liquor_inventory.html'>add another liquor to inventory</a></p>"
+        data = data + "<p><a href='./'>return to index</a></p>"
+        data = data + """
+        </body>
+        <html>
+        """
+        start_response('200 OK', list(html_headers))
+        return [data]
+
+    def recv_add_recipe(self, environ, start_response):
+        formdata = environ['QUERY_STRING']
+        results = urlparse.parse_qs(formdata)
+        msg = "No values were modified"
+        is_duplicate = False
+        #Check if values have data
+        if ( ('name' in results) and ('ingredients' in results) ):
+                #Get recipe name
+                name = results['name'][0]
+                #Get ingredients
+                ingredients = results['ingredients'][0]
+
+                for r in db._recipe_db:
+			if rec.Name ==r.Name:  #Recipe already exists
+                        	is_duplicate =True
+                if (is_duplicate):
+			message = "Ooops recipe name is already in in database"
+		else:
+                        #Add recipe
+                        ingredient_list = []
+			#Separate ingredient name and ingredient amount
+		        split_ingredients = ingredients.split(',')
+			#For each ingredient
+			for i in split_ingredients:
+				#Add tuple to ingredient list
+				ingredient_list.append(tuple(i.split(':')))
+
+			#create a recipe object
+			r = recipes.Recipe(name,ingredient_list)
+
+			#add recipe
+			db.add_recipe(r)
+
+                        message = "Recipe type has been added successfully"
+                        msg = "Updated recipe list"
+
+        #At least one of the fields is empty
+        else:
+                message = "Ooops at least one of the fields is empty"
+
+        #Generate results in html format
+        content_type = 'text/html'
+        data= """
+        <html>
+        <head>
+        <title>Updated Recipe</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        """
+        data = data + "<h1>" + message + "</h1>"
+        data = data + msg
+        tmp  = dynamic_web.generate_recipe_table()
+        data = data + tmp
+        data = data + "<p><a href='./add_liquor_types.html'>add another liquor type</a$
         data = data + "<p><a href='./'>return to index</a></p>"
         data = data + """
         </body>

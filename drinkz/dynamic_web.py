@@ -179,6 +179,46 @@ def generate_Recipes():
         return data
 
 #############################################################
+#Add Recipe
+#Reference: github.com/ctb/cse491-linkz
+#############################################################
+def add_Recipe():
+        data= """
+        <html>
+        <head>
+        <title>Add Recipe</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Enter recipe</h1>
+        """
+        data = data + """
+
+        <p> <font size="04">Ingredients Format:</font>
+        <a> name,amount;name,amount;</a>
+        <p><b>Note:</b> name and amount are separated by ',' 
+        a new ingredient is separated by ';'
+        </p>
+
+        <form action='recv_add_recipe'>
+        Recipe name: <input type='text' name='name' size'20'>
+        <p>Ingredients: &nbsp;&nbsp;<input type='text' name='ingredients' size'100'></p>
+        <p><input type='submit'></p>
+        </form>
+
+        Link to to home:
+        <p><a href='index.html'>Back to Index</a>
+        </body>
+        </html>
+        """
+        return data
+
+#############################################################
 #inventory_Table
 #############################################################
 def generate_inventory_table():

@@ -231,7 +231,7 @@ def generate_recipe_we_can_make_table():
 			name = i[0]
 			amount = i[1]
 			data = data + "<tr><td>"+name + "</td> <td>" + amount + "</td></tr>"
-            	data = data +"</table>< </tr> </td>"
+            	data = data +"</table> </tr> </td>"
 
 
         data = data +  """

@@ -221,7 +221,7 @@ class SimpleApp(object):
                 ingredients = results['ingredients'][0]
 
                 for r in db._recipe_db:
-			if name ==r.Name:  #Recipe already exists
+			if name.lower() ==r.Name.lower():  #Recipe already exists
                         	is_duplicate =True
                 if (is_duplicate):
 			message = "Ooops recipe name is already in in database"

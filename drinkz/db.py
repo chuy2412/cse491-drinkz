@@ -42,7 +42,7 @@ _recipe_db = set()       #Added a recipe database as set
 def check_recipeName(recipe_Name):
 
     for r in sorted(_recipe_db):
-	if r.Name ==recipe_Name:
+	if r.Name.lower() ==recipe_Name.lower():
 		return True
 
     return False
@@ -69,7 +69,7 @@ def check_if_can_make_recipes(recipe_list):
 def add_recipe(r):
     #Check if the recipe name already exists
     for rec in _recipe_db:
-	if rec.Name ==r.Name:  #Recipe already exists
+	if rec.Name.lower() ==r.Name.lower():  #Recipe already exists
 		err = 'Duplicate Recipe'
 		raise DuplicateRecipeName(err)
 
@@ -90,7 +90,7 @@ def add_recipe(r):
 #If recipe found, it returns the recipe
 def get_recipe(name):
     for temp in _recipe_db:
-        if name in temp.Name: #Found the recipe name
+        if name.lower() in temp.Name.lower(): #Found the recipe name
             return temp       #Return the recipe
 
     #Recipe not found
@@ -153,23 +153,32 @@ def add_bottle_type(mfg, liquor, typ):
 
 def _check_bottle_type_exists(mfg, liquor):
     for (m, l, _) in _bottle_types_db:
-        if mfg == m and liquor == l:
+        if mfg.lower() == m.lower() and liquor.lower() == l.lower():
             return True
 
     return False
 
 def add_to_inventory(mfg, liquor, amount):
-    "Add the given liquor/amount to inventory."
     if not _check_bottle_type_exists(mfg, liquor):
         err = "Missing liquor: manufacturer '%s', name '%s'" % (mfg, liquor)
         raise LiquorMissing(err)
 
-    # just add it to the inventory database as a tuple, for now.
-    #_inventory_db.append((mfg, liquor, amount))
-    if not ((mfg,liquor)) in _inventory_db:
-        _inventory_db[((mfg,liquor))] = set()
-        
-    _inventory_db[((mfg,liquor))].add(amount)
+    found = False
+    for item in _inventory_db:
+	#print "Result is: " + item[0] + " : " + item[1] + "\n"
+	if(mfg.lower() ==item[0].lower() and liquor.lower()==item[1].lower()):
+		found = True
+		mfg = item[0]
+		liquor = item[1]
+
+    if not found: 	
+	_inventory_db[((mfg,liquor))] = set()    
+   	 #Add to inventory
+    	_inventory_db[((mfg,liquor))].add(amount)
+
+    else:
+	#Add new amount to existing inventory
+	_inventory_db[((mfg,liquor))].add(amount)
 
 def check_inventory(mfg, liquor):
     if ((mfg,liquor)) in _inventory_db: #now checks in a dictionary
@@ -183,7 +192,7 @@ def check_inventory(mfg, liquor):
 def get_liquor_amount_noMix(type):
 	max_amount = 0.0
 	for (m, l, t) in _bottle_types_db:
-        	if type == t:
+        	if type.lower() == t.lower():
 			temp_amount = get_liquor_amount(m,l)
 			if temp_amount > max_amount:
 				max_amount= temp_amount	#Update max amount
@@ -197,7 +206,7 @@ def get_liquor_amount_withMix(liquor):
     amounts = []
     totalVolume = 0.0
     for key in _inventory_db:
-	if key[1]==liquor:
+	if key[1].lower()==liquor.lower():
         	amounts.append(_inventory_db[key]) #add amount
 
     for s in amounts:

@@ -72,6 +72,7 @@ def add_recipe(r):
 	if rec.Name.lower() ==r.Name.lower():  #Recipe already exists
 		err = 'Duplicate Recipe'
 		raise DuplicateRecipeName(err)
+		return False
 
     #Check for proper format on each ingredient amount
     for ingredient in r.Ingredient:
@@ -85,6 +86,7 @@ def add_recipe(r):
     #New recipe
     #Add recipe in the recipe database
     _recipe_db.add(r)
+    return True
 
 #Input: a recipe name
 #If recipe found, it returns the recipe
@@ -148,8 +150,13 @@ class ImproperRecipeIngredientAmount(Exception):
 
 
 def add_bottle_type(mfg, liquor, typ):
+    if _check_bottle_type_exists(mfg,liquor):
+    	#Duplicate
+	return False
+
     "Add the given bottle type into the drinkz database."
     _bottle_types_db.add((mfg, liquor, typ))
+    return True
 
 def _check_bottle_type_exists(mfg, liquor):
     for (m, l, _) in _bottle_types_db:
@@ -162,6 +169,7 @@ def add_to_inventory(mfg, liquor, amount):
     if not _check_bottle_type_exists(mfg, liquor):
         err = "Missing liquor: manufacturer '%s', name '%s'" % (mfg, liquor)
         raise LiquorMissing(err)
+	return False
 
     found = False
     for item in _inventory_db:
@@ -179,6 +187,8 @@ def add_to_inventory(mfg, liquor, amount):
     else:
 	#Add new amount to existing inventory
 	_inventory_db[((mfg,liquor))].add(amount)
+
+    return True
 
 def check_inventory(mfg, liquor):
     if ((mfg,liquor)) in _inventory_db: #now checks in a dictionary

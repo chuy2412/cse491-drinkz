@@ -386,6 +386,23 @@ class SimpleApp(object):
     def rpc_get_liquor_inventory(self):
         return dict(db.get_liquor_inventory())    
 
+    #HW5_1d JSON-RPC add recipe
+    def rpc_add_recipe(self, name, ingredients):
+        r = recipes.Recipe(name,ingredient_list)
+        return db.add_recipe(r)
+
+    #HW5_1d JSON-RPC add liquor to inventory          
+    def rpc_add_to_inventory(self, mfg,liquor,amt ):
+        return db.add_to_inventory(mfg,liquor,amt)
+
+    #HW5_1d JSON-RPC add liquor type      
+    def rpc_add_bottle_type(self, mfg, liquor,typ):
+        return db.add_bottle_type(mfg,liquor,typ)
+
+    #HW5_1d JSON-RPC return the recipes that we can make
+    def rpc_check_if_can_make_recipes(self, recipe_list):
+        return list(db.check_if_can_make_recipes(recipe_list))
+
 if __name__ == '__main__':
     import random, socket
     port = random.randint(8000, 9999)

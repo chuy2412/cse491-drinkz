@@ -109,7 +109,7 @@ def generate_index():
         <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
         <a href='liquor_types.html'>View liquor types</a> 
         <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        <a href='add_liquor_types.html'>Add liquor to inventory</a>
+        <a href='add_liquor_types.html'>Add liquor types</a>
         </p>
 
         <p> <font size="04">Conversion:</font></p>
@@ -146,12 +146,18 @@ def generate_recipe_table():
                 possible = 'Yes'
             #Display result
             data = data +  "<tr> <td>" + r.Name + " </td>  <td>"
+	    data = data + """
+	    <table border="1">
+            <tr>
+            <th>Ingredient Name</th>
+            <th>Amount</th>
+	    """
 	    #for each tuple
 	    for i in r.Ingredient:
 		name = i[0]
 		amount = i[1]
-		data = data + name + ", " + amount + "; "
-            data = data +"</td> <td>" +possible +  " </td> </tr>"
+		data = data + "<tr><td>"+name + "</td> <td>" + amount + "</td></tr>"
+            data = data +"</tr></table><td>" +possible +  " </td> </tr>"
 
 
         data = data +  """
@@ -185,6 +191,8 @@ def generate_Recipes():
 	Link to the other three files:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
+        <p><a href='add_recipe.html'>Add recipe</a>
+        </p>
 	<p><a href='inventory.html'>Inventory</a>
 	</p>
 	<p><a href='liquor_types.html'>Liquor Types</a>
@@ -281,6 +289,8 @@ def generate_Inventory():
 	Link to the other three files:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
+        <p><a href='add_liquor_inventory.html'>Add liquor to inventory</a>
+        </p>
 	<p><a href='recipes.html'>Recipes</a>
 	</p>
 	<p><a href='liquor_types.html'>Liquor Types</a>
@@ -371,6 +381,8 @@ def generate_Liquor_Types():
 	Link to the other three files:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
+        <p><a href='add_liquor_types.html'>Add liquor types</a>
+        </p>
 	<p><a href='recipes.html'>Recipes</a>
 	</p>
 	<p><a href='inventory.html'>Inventory</a>

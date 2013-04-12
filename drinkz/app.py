@@ -118,7 +118,7 @@ class SimpleApp(object):
 
 	#At least one of the fields is empty
 	else:
-		message = "Ooops at least one of the fields is empty"
+		message = "Ooops at least one of the fields was empty"
 
         #Generate results in html format
         content_type = 'text/html'
@@ -178,7 +178,7 @@ class SimpleApp(object):
 				status = "Updated inventory\n"
 
 	else:
-		message = "Ooops at least one of the fields is empty"
+		message = "Ooops at least one of the fields was empty"
 
         #Generate results in html format
         content_type = 'text/html'
@@ -247,7 +247,7 @@ class SimpleApp(object):
 
         #At least one of the fields is empty
         else:
-                message = "Ooops at least one of the fields is empty"
+                message = "Ooops at least one of the fields was empty"
 
         #Generate results in html format
         content_type = 'text/html'

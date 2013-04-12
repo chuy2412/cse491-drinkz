@@ -5,6 +5,7 @@ import simplejson
 import dynamic_web
 import unit_conversion
 import db
+import recipes
 
 dispatch = {
     '/' : 'index',
@@ -220,19 +221,20 @@ class SimpleApp(object):
                 ingredients = results['ingredients'][0]
 
                 for r in db._recipe_db:
-			if rec.Name ==r.Name:  #Recipe already exists
+			if name ==r.Name:  #Recipe already exists
                         	is_duplicate =True
                 if (is_duplicate):
 			message = "Ooops recipe name is already in in database"
 		else:
+			print "Ingredients: " + ingredients + " \n"
                         #Add recipe
                         ingredient_list = []
 			#Separate ingredient name and ingredient amount
-		        split_ingredients = ingredients.split(',')
+		        split_ingredients = ingredients.split(';')
 			#For each ingredient
 			for i in split_ingredients:
 				#Add tuple to ingredient list
-				ingredient_list.append(tuple(i.split(':')))
+				ingredient_list.append(tuple(i.split(',')))
 
 			#create a recipe object
 			r = recipes.Recipe(name,ingredient_list)
@@ -266,7 +268,7 @@ class SimpleApp(object):
         data = data + msg
         tmp  = dynamic_web.generate_recipe_table()
         data = data + tmp
-        data = data + "<p><a href='./add_liquor_types.html'>add another liquor type</a$
+        data = data + "<p><a href='./add_recipe.html'>add another recipe</a></p>"
         data = data + "<p><a href='./'>return to index</a></p>"
         data = data + """
         </body>

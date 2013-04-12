@@ -128,6 +128,40 @@ def generate_index():
         return data
 
 ###############################################################
+#generate_recipe_table
+#Reference: github.com/ctb/cse491-linkz
+###############################################################
+def generate_recipe_table():
+        data = """ 
+        <table border="1">
+        <tr>
+        <th>Recipe Name</th>
+        <th>Ingredients</th>
+        <th>Enough ingredients?</th>
+        """
+        #For every recipe in the database
+        for r in sorted(db._recipe_db):
+            possible = 'No'
+            if len(r.need_ingredients()) == 0:
+                possible = 'Yes'
+            #Display result
+            data = data +  "<tr> <td>" + r.Name + " </td>  <td>"
+	    #for each tuple
+	    for i in r.Ingredient:
+		name = i[0]
+		amount = i[1]
+		data = data + name + ", " + amount + "; "
+            data = data +"</td> <td>" +possible +  " </td> </tr>"
+
+
+        data = data +  """
+        </table>
+        </tr>
+        </table>
+	"""
+	return data
+
+###############################################################
 #Recipes
 #Reference: github.com/ctb/cse491-linkz
 ###############################################################
@@ -146,26 +180,8 @@ def generate_Recipes():
         <body>
         <h1>Recipes</h1>
 	"""
-	data = data + """ 
-	<table border="1">
-	<tr>
-	<th>Recipe Name</th>
-	<th>Ingredients</th>
-	<th>Enough ingredients?</th>
-	"""
-	#For every recipe in the database
-	for r in sorted(db._recipe_db):
-	    possible = 'No'
-	    if len(r.need_ingredients()) == 0:
-	        possible = 'Yes'
-	    #Display result
-	    data = data +  "<tr> <td>" + r.Name + " </td> <td>" + str(r.Ingredient) + " </td> <td>" +possible +  " </td> </tr>"
-
-	data = data +  """
-	</table>
-	</tr>
-	</table>
-
+	data = data + generate_recipe_table()
+	data = data + """
 	Link to the other three files:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
@@ -260,24 +276,8 @@ def generate_Inventory():
         <body>
         <h1>Inventory</h1>
 	"""
-	data = data +  """ 
-	<table border="1">
-	<tr>
-	<th>Manufacturer</th>
-	<th>Liquor Type</th>
-	<th>Amount</th>
-	"""
-	for mfg, liquor in sorted(db.get_liquor_inventory()):
-    		#Get the amount in ml 
-    		amt = db.get_liquor_amount(mfg,liquor)
-    		amount = str(amt) + ' ml'
-    		data = data +  "<tr> <td>" + mfg + "</td> <td>"+ liquor + "</td> <td>"+ amount+ " </td> </tr>"
-
+	data = data + generate_inventory_table()
 	data = data + """
-	</table>
-	</tr>
-	</table>
-
 	Link to the other three files:
 	<p><a href='index.html'>Back to Index</a>
 	</p>
@@ -365,20 +365,8 @@ def generate_Liquor_Types():
         <body>
         <h1>Liquor Types</h1>
 	"""
+	data = data + generate_liquor_type_table()
 	data = data + """
-	<table border="1">
-	<tr>
-	<th>Manufacturer</th>
-	<th>Liquor</th>
-	<th>Type</th>
-	"""
-	for (mfg, liquor, type) in sorted(db._bottle_types_db):
-    		data = data + "<tr> <td>" + mfg+ "</td> <td>" +liquor+" </td> <td>"+type+" </td> </tr>"
-
-	data = data +  """
-	</table>
-	</tr>
-	</table>
 
 	Link to the other three files:
 	<p><a href='index.html'>Back to Index</a>

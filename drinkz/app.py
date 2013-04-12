@@ -307,7 +307,7 @@ class SimpleApp(object):
                 type = results['type'][0]
  
                 #Search for given type
-                search_results = db.search_drink_price(type)
+                search_results = db.cost_search_drink_type(type)
                 message = "Search results for: " + type
 
         #Empty field
@@ -330,7 +330,6 @@ class SimpleApp(object):
         <body>
         """
         data = data + "<h1>" + message + "</h1>"
-        data = data + msg
         tmp = dynamic_web.generate_drink_cost_table(search_results)
         data = data + tmp
         data = data + "<p><a href='./search_drink_price.html'>Search for another drink</a></p>"

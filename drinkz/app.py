@@ -446,7 +446,7 @@ class SimpleApp(object):
 
     #HW5_1d JSON-RPC add recipe
     def rpc_add_recipe(self, name, ingredients):
-        r = recipes.Recipe(name,ingredient_list)
+        r = recipes.Recipe(name,ingredients)
         return db.add_recipe(r)
 
     #HW5_1d JSON-RPC add liquor to inventory          

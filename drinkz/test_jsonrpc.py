@@ -70,7 +70,7 @@ def test_convert_units_to_ml():
 #############################################################################
 def test_get_recipe_names():
     #load from file
-    dynamic_web.load_database('bin/sample_database')
+    dynamic_web.load_database('/../bin/drinkz_database')
 
     s, h, result = call_remote('get_recipe_names', [])
 
@@ -99,7 +99,7 @@ def test_get_recipe_names():
 #############################################################################
 def test_get_liquor_inventory():
     #load from file
-    dynamic_web.load_database('bin/sample_database')
+    dynamic_web.load_database('/../bin/drinkz_database')
 
     s, h, result = call_remote('get_liquor_inventory', [])
 
@@ -120,3 +120,54 @@ def test_get_liquor_inventory():
 
     #Uncle Herman's
     assert 'Uncle Herman\'s' in result['result'], result['result']
+
+#############################################################################
+#Test function "rpc_add_recipe"
+#Passes: scotch on the rocks, ('blended scotch','4 oz')
+#Check if recipe name and ingredients are on the database
+#############################################################################
+def test_rpc_add_recipe():
+    db._reset_db()
+    name = "scotch on the rocks"
+    ingredients = [('blended scotch','4 oz')]
+    s, h, result = call_remote('add_recipe', [name,ingredients])
+
+    #Check for valid status
+    assert s == '200 OK'
+
+    #Check for correct content
+    assert ('Content-Type', 'application/json') in h, h
+
+    #Check for scotch on the rocks
+    assert db.check_recipeName(name)
+
+
+#############################################################################
+#Test function "rpc_add_to_inventory"
+#Passes: manufacturer, liquor, amount 
+#Check if added to inventory   
+#############################################################################
+def test_rpc_add_to_inventory():
+    db._reset_db()
+    
+    #Add bottle type first
+    db.add_bottle_type('Johnnie Walker', 'black label', 'blended scotch')
+    
+    mfg = 'Johnnie Walker'
+    liquor =  'black label'
+    amt =  '500 ml'
+
+    s, h, result = call_remote('add_to_inventory', [mfg,liquor,amt])
+
+    #Check for valid status
+    assert s == '200 OK'
+
+    #Check for correct content
+    assert ('Content-Type', 'application/json') in h, h
+
+    #Check if the data has been added to inventory
+    assert db.check_inventory(mfg,liquor)
+
+    #Check for correct amount
+    assert amt == get_liquor_amount(mfg,liquor
+

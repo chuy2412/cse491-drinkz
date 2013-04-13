@@ -1,0 +1,30 @@
+####################################################
+#Recipes.txt
+####################################################
+This document describes how to use bulk-load recipes
+
+
+Usage:   python bin/load-recipes [filename]
+
+Where [filename] represents the name of the file.
+
+Comments: the file should contain the following information
+	  For every line: [name],[ingredients]
+	  where [name] is the name of the recipe
+	  and [ingredients] has the following format: ingredient_name,ingredient_amount
+	  Note: a recipe can contain multiple ingredients (as long as they are separated
+		by a comma).
+          For example:    vodka martini,unflavored vodka,6 oz,vermouth,1.5 oz
+			  in this case [name] = vodka martini
+			               [ingredients] = unflavored vodka,6 oz,vermouth,1.5 oz
+
+
+Some sample files were added in test-data/ to test usage
+	recipe-data1.txt   (Example with 1 recipe and 1 ingredient)
+	recipe-data2.txt   (Example with 2 recipes and multiple ingredients)
+	recipe-data3.txt   (Example with 3 recipes and multiple ingredients)
+
+Test cases were added in drinkz/test_drinkz.py
+	In particular: test_bulk_load_recipes_1()
+		       test_bulk_load_recipes_2()
+		       test_bulk_load_recipes_3()

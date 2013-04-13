@@ -1,0 +1,32 @@
+####################################################
+#Features
+####################################################
+
+Story1: Joe has a small budget but a big thirst for
+        drinks, so he wants to be able to see 
+        different liquor types and their cost to
+        determine what drink to buy.
+       
+Story2: Joe is interested only on a few liquor types
+	so he is too lazy to see the entire database
+        of drinks and their cost, so he wants to be 
+	able to search the database of liquor prices
+	by liquor types.
+
+A. Data Component: A database of liquor prices
+		   Source: Virginia Department of
+                           Alcoholic Beverage Control
+                   Stored in: drinkz/drinks_cost.csv
+
+B.  API for storing/retrieving/querying the relevant data
+    Created a new class in: drinkz/cost.py
+    Class contains functions to load database, return results
+    and search cost by liquor type
+
+C.  A Web interface for display and modifying the relevant data
+    Created functions in drinkz/app.py and drinkz/dynamic_web.py
+
+D. A set of JSON-RPC functions
+   Added function in drinkz/app.py
+
+

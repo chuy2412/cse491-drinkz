@@ -169,5 +169,43 @@ def test_rpc_add_to_inventory():
     assert db.check_inventory(mfg,liquor)
 
     #Check for correct amount
-    assert amt == get_liquor_amount(mfg,liquor
+    assert 500 == db.get_liquor_amount(mfg,liquor)
 
+#############################################################################
+#Test function "rpc_add_bottle_type"
+#Passes: manufacturer, liquor, type 
+#Check if added to bottle_types_db
+#############################################################################
+def test_rpc_add_bottle_type():
+    db._reset_db()
+    
+    mfg = 'Johnnie Walker'
+    liquor =  'black label'
+    type =  'blended scotch'
+
+    s, h, result = call_remote('add_bottle_type', [mfg,liquor,type])
+
+    #Check for valid status
+    assert s == '200 OK'
+
+    #Check for correct content
+    assert ('Content-Type', 'application/json') in h, h
+
+    #Check if the data has been added to bottle type
+    assert db._check_bottle_type_exists(mfg,liquor)
+
+
+#############################################################################
+#Test function: "rpc_search_drink_price"
+#############################################################################
+def test_rpc_search_drink_price():
+    #Search for tequila
+    type = "Tequila"
+    result = db.cost_search_drink_type(type)
+    found = False
+    #Check for Tequila
+    for (t,a,b,c,d,e,f) in result:
+	if t =="TEQUILA":
+		found = True
+		break 
+    assert found

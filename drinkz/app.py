@@ -461,6 +461,10 @@ class SimpleApp(object):
     def rpc_check_if_can_make_recipes(self, recipe_list):
         return list(db.check_if_can_make_recipes(recipe_list))
 
+    #H5_2 JSON-RPC to search price of a drink type
+    def rpc_search_drink_price(self, type):
+        return db.cost_search_drink_type(type)
+
 if __name__ == '__main__':
     import random, socket
     port = random.randint(8000, 9999)

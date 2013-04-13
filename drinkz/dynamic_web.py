@@ -133,7 +133,10 @@ def generate_index():
         <a href='convert_to_ml.html'>Convert to ml</a> 
         </p>	
 
+	<p>&nbsp;</p>
+        <p><a href='view_image.html'>View image</a></p>
 	<p>
+
 	<input type="button" onclick="myFunction()" value="Show alert box" />
 	</p>
 

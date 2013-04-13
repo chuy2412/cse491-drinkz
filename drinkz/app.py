@@ -7,6 +7,11 @@ import unit_conversion
 import db
 import recipes
 
+import os
+import sys
+import os.path
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 dispatch = {
     '/' : 'index',
     '/index.html' : 'index',
@@ -26,7 +31,8 @@ dispatch = {
     '/recv_search_drink_price' : 'recv_search_drink_price', 
     '/recv_convert' : 'recv_convert',
     '/rpc'  : 'dispatch_rpc',
-    '/search_drink_price.html' : 'search_drink_price'
+    '/search_drink_price.html' : 'search_drink_price',
+    '/view_image.html' : 'view_image'
 }
 
 html_headers = [('Content-type', 'text/html')]
@@ -105,7 +111,15 @@ class SimpleApp(object):
 	data = dynamic_web.search_drink_price()
         start_response('200 OK', list(html_headers))
         return [data]
-
+ 
+    def view_image(self, environ, start_response):
+        content_type = 'image/jpg'
+        pth = os.path.dirname(__file__)
+        filename = pth + '/googly_eyes_drink_markers_2.jpg'
+        data = open(filename, 'rb').read()
+        #data += """ <p><a href='index.html'>Back to Index</a></p>"""
+	start_response('200 OK', [('Content-type', content_type)])
+        return [data]
 
     def error(self, environ, start_response):
         status = "404 Not Found"

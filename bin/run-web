@@ -6,7 +6,10 @@ from wsgiref.simple_server import make_server
 import urlparse
 import simplejson
 from drinkz.app import SimpleApp
-
+from drinkz import dynamic_web
+from drinkz import unit_conversion
+from drinkz import recipes
+from drinkz import db
 
 #Copied bottom part of app.py
 
@@ -14,6 +17,10 @@ if __name__ == '__main__':
     import random, socket
     port = random.randint(8000, 9999)
     
+    #load from file
+    dynamic_web.load_database('/../bin/drinkz_database')
+    #dynamic_web.save_database('/../bin/drinkz_database')
+
     app = SimpleApp()
     
     httpd = make_server('', port, app)

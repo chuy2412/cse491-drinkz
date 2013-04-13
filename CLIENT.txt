@@ -1,0 +1,30 @@
+#################################################################
+#Client.py description
+#################################################################
+client.py performs the following tests:
+   *A straight up Get from the index page
+   *A form submission for unit conversion: test 4 oz ==118.294ml 
+   *Image retrieval : Check if the image has been received
+
+
+#####################################################################
+#How to run
+####################################################################
+   Step1: with one terminal go to the root directory: cse491-drinkz
+   Step2: run the web by typing: python bin/run-web
+   
+   You should see a similar message: 
+    Added db
+    Serving on port 8069...
+    Try using a Web browser to go to http://arctic.cse.msu.edu:8069/
+
+
+   Step3: open a second terminal, go to the root directory cse491-drinkz
+   Step4: in the new terminal run the client program by typing:
+	   python bin/client.py arctic.cse.msu.edu [portNumber]
+
+	   where [portNumber] is provided on the first terminal
+	   on this example, the port number would be 8069
+
+
+      

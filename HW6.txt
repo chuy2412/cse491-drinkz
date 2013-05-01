@@ -1,0 +1,33 @@
+###########################################################################
+#Jesus Rivera
+#Homework 6 notes
+###########################################################################
+
+6.1  Implemented a WSGI server that speaks POST
+      Reference from 
+      https://github.com/ctb/cse491-drinkz/blob/hw5-solutions/server.py
+
+      Added server.py on the main directory
+      How to run:
+	"python server.py"
+	Then it will display the server and post number
+	Use your favorite browser and connect to the server and include the 
+	 port number
+
+6.2  Feature implementation was added since homework 5
+     I thought implementation was requiered on hw5 so I added that on my solution
+	A documentation can be found in: "FEATURE.txt"
+
+     The 2 features can be found under the "Conversion" section
+     Brief description:
+	"View drink prices" Allows the user to see the entire database
+			    of drinks with their respective price
+
+	"Search price of drink type" Allows the user to search the price
+				     of all drinks of the given type
+  	
+
+6.3 Change db.py to use SQLite - Not implemented
+    Unable to implement this functionality
+
+6.4

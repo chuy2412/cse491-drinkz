@@ -92,6 +92,7 @@ def add_recipe(r):
     #New recipe
     #Add recipe in the recipe database
     _recipe_db.add(r)
+    
     return True
 
 #Input: a recipe name

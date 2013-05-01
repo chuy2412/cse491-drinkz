@@ -68,7 +68,7 @@ sg1
 ccopy_reg
 _reconstructor
 p37
-(crecipes
+(cdrinkz.recipes
 Recipe
 p38
 c__builtin__
@@ -78,14 +78,16 @@ NtRp40
 (dp41
 S'Name'
 p42
-S'scotch on the rocks'
+S'Chuy Drink'
 p43
 sS'Ingredient'
 p44
 (lp45
-(g5
-S'4 oz'
-p46
+(S'Tequila'
+S'1.5 oz'
+tp46
+a(S' Lime Juice'
+S'0.5 oz'
 tp47
 asbag37
 (g38
@@ -98,44 +100,53 @@ p50
 sg44
 (lp51
 (S'orange juice'
-p52
 S'6 oz'
-p53
-tp54
-a(g16
+tp52
+a(S'vermouth'
 S'1.5 oz'
-p55
-tp56
+tp53
 asbag37
 (g38
 g39
-NtRp57
-(dp58
+NtRp54
+(dp55
 g42
 S'whiskey bath'
-p59
+p56
 sg44
-(lp60
-(g5
+(lp57
+(S'blended scotch'
 S'2 liter'
-p61
-tp62
+tp58
 asbag37
 (g38
 g39
-NtRp63
-(dp64
+NtRp59
+(dp60
+g42
+S'scotch on the rocks'
+p61
+sg44
+(lp62
+(S'blended scotch'
+S'4 oz'
+tp63
+asbag37
+(g38
+g39
+NtRp64
+(dp65
 g42
 S'vodka martini'
-p65
+p66
 sg44
-(lp66
-(g9
-g53
-tp67
-a(g16
-g55
+(lp67
+(S'unflavored vodka'
+S'6 oz'
 tp68
-asbatRp69
-tp70
+a(S'vermouth'
+S'1.5 oz'
+tp69
+asbatRp70
+tp71
 .

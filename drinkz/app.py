@@ -41,7 +41,7 @@ class SimpleApp(object):
     def __call__(self, environ, start_response):
 
 	#load from file
-	#dynamic_web.load_database('newDB')
+        dynamic_web.load_database('/../bin/drinkz_database')
 
         path = environ['PATH_INFO']
         fn_name = dispatch.get(path, 'error')
@@ -147,6 +147,7 @@ class SimpleApp(object):
 		else:
 			#Add bottle type
 			db.add_bottle_type(mfg,liquor,typ)
+			dynamic_web.save_database('/../bin/drinkz_database')
 			message = "Liquor type has been added successfully"
 			msg = "Liquor type has been added"
 
@@ -208,6 +209,7 @@ class SimpleApp(object):
 			else:
                 		#Add to inventory
                 		db.add_to_inventory(mfg,liquor, amt)
+		                dynamic_web.save_database('/../bin/drinkz_database')
                 		message = "Added to inventory successfully"
 				status = "Updated inventory\n"
 
@@ -275,7 +277,7 @@ class SimpleApp(object):
 
 			#add recipe
 			db.add_recipe(r)
-
+			dynamic_web.save_database('/../bin/drinkz_database')
                         message = "Recipe type has been added successfully"
                         msg = "Updated recipe list"
 
@@ -479,17 +481,17 @@ class SimpleApp(object):
     def rpc_search_drink_price(self, type):
         return db.cost_search_drink_type(type)
 
-if __name__ == '__main__':
-    import random, socket
-    port = random.randint(8000, 9999)
-    #load from file
-    dynamic_web.load_database('/../bin/drinkz_database')
-    #dynamic_web.save_database('/../bin/drinkz_database')
-    app = SimpleApp()
-    
-    httpd = make_server('', port, app)
-    print "Serving on port %d..." % port
-    print "Try using a Web browser to go to http://%s:%d/" % \
-          (socket.getfqdn(), port)
-    httpd.serve_forever()
+#if __name__ == '__main__':
+#    import random, socket
+#    port = random.randint(8000, 9999)
+#    #load from file
+#    dynamic_web.load_database('/../bin/drinkz_database')
+#    #dynamic_web.save_database('/../bin/drinkz_database')
+#    app = SimpleApp()
+#    
+#    httpd = make_server('', port, app)
+#    print "Serving on port %d..." % port
+#    print "Try using a Web browser to go to http://%s:%d/" % \
+#          (socket.getfqdn(), port)
+#    httpd.serve_forever()
 

@@ -1,12 +1,16 @@
 #############################################################################
 #server.py
-#Copy from: https://github.com/ctb/cse491-drinkz/blob/hw5-solutions/server.py
+#Reference: https://github.com/ctb/cse491-drinkz/blob/hw5-solutions/server.py
+#HW 6.1 Added support for POST
 #############################################################################
 #!/usr/bin/env python
 import random
 import socket
 import time
 from drinkz.app import SimpleApp
+import json
+from StringIO import StringIO
+
 
 the_app = SimpleApp()
 
@@ -48,9 +52,24 @@ while True:
 
    # build environ & start_response
    environ = {}
+   
+   #From app.py
+   if request_type == "POST":
+        # print 'Request Headers: ', request_headers
+        # user_agent, host, p, content, length, post_form, wsgi_input = request_headers
+        # print "Some random shit: ", user_agent, host, p, c, length, post_form, wsgi_input
+        lengthList = [cont for cont in request_headers if "Content-Length" in cont]
+        length = lengthList[0]
+        numberList = [int(i) for i in length.split() if i.isdigit()]
+        number = numberList[0]
+        environ['CONTENT_LENGTH'] = number
+
+        wsgi_input = request_headers[-1]
+        environ['wsgi.input'] = StringIO(wsgi_input)
+
    environ['PATH_INFO'] = path
    environ['QUERY_STRING'] = query_string
-
+   environ['REQUEST_METHOD'] = request_type
    d = {}
    def start_response(status, headers):
       d['status'] = status

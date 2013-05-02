@@ -98,7 +98,8 @@ class SimpleApp(object):
         return [data]
 
     def convert_to_ml(self, environ, start_response):
-        data = dynamic_web.convert_to_ml()
+        #data = dynamic_web.convert_to_ml()
+        data = open('drinkz/conversion_form.html').read()
         start_response('200 OK', list(html_headers))
         return [data]
 
@@ -481,17 +482,17 @@ class SimpleApp(object):
     def rpc_search_drink_price(self, type):
         return db.cost_search_drink_type(type)
 
-#if __name__ == '__main__':
-#    import random, socket
-#    port = random.randint(8000, 9999)
-#    #load from file
-#    dynamic_web.load_database('/../bin/drinkz_database')
-#    #dynamic_web.save_database('/../bin/drinkz_database')
-#    app = SimpleApp()
-#    
-#    httpd = make_server('', port, app)
-#    print "Serving on port %d..." % port
-#    print "Try using a Web browser to go to http://%s:%d/" % \
-#          (socket.getfqdn(), port)
-#    httpd.serve_forever()
+if __name__ == '__main__':
+    import random, socket
+    port = random.randint(8000, 9999)
+    #load from file
+    dynamic_web.load_database('/../bin/drinkz_database')
+    #dynamic_web.save_database('/../bin/drinkz_database')
+    app = SimpleApp()
+    
+    httpd = make_server('', port, app)
+    print "Serving on port %d..." % port
+    print "Try using a Web browser to go to http://%s:%d/" % \
+          (socket.getfqdn(), port)
+    httpd.serve_forever()
 

@@ -4,6 +4,9 @@
 def convert_to_ml(amount):
     amt = amount.split()
     volume = 0.0
+    if len(amt) == 1:
+	return volume
+
     if amt[1] == "oz":
     	volume += float(amt[0]) * 29.5735
     elif amt[1]=="ml":

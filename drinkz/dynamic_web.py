@@ -46,12 +46,12 @@ def load_database(filename):
 		#Try to load from database
 		f_name = os.path.dirname(__file__) + filename
 	   	db.load_db(f_name)
-		print "Loaded from database"
+		#print "Loaded from database"
 
 	except Exception:
 		#If the file was not found add items
 		add_items()
-		print 'Added db'
+		#print 'Added db'
 		pass
 
 ###############################################################

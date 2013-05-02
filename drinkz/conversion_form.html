@@ -1,0 +1,53 @@
+<html>
+
+<!-- Show off some jQuery functionality --> 
+<html>
+        <head>
+        <title>Conversion</title>
+        <style type='text/css'>
+        h1 {color:red;}
+        body{
+        font-size:14px;
+        }
+        </style>
+        </head>
+        <body>
+        <h1>Convert to ml</h1>
+<head>
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+
+
+<p>
+
+Enter amount: <input type='text' class="amount" value='' size='10' />
+ <p>Valid units: "oz", "liter", "gallon"</p>   
+<p> For example: '4 oz'
+
+<p class='toupdate' />
+
+<script type="text/javascript">
+
+function update_result(a, c) {
+   text = '<font color="red"><b>' + a + ' = ' + c + ' ml'+'</font></b>';
+   $('p.toupdate').html(text);
+}
+
+function do_convert() {
+ b = $('input.amount').val();
+ $.ajax({
+     url: '/rpc', 
+     data: JSON.stringify ({method:'convert_units_to_ml', params:[b,], id:"0"} ),
+     type: "POST",
+     dataType: "json",
+     success: function (data) { update_result(b,data.result) },
+     error: function (err)  { alert ("Error");}
+  });
+}
+
+$('input.amount').change(do_convert);
+</script>
+
+</body>
+</html>

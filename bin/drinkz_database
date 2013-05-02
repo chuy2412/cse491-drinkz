@@ -14,139 +14,151 @@ p7
 S'vodka'
 p8
 S'unflavored vodka'
-p9
-tp10
+tp9
 a(S"Uncle Herman's"
-p11
+p10
 S'moonshine'
-p12
+p11
 g5
+tp12
+a(S'Jesus'
+S'Tequila'
+S'Tequila'
 tp13
 a(S'Rossi'
 p14
 S'extra dry vermouth'
 p15
 S'vermouth'
-p16
-tp17
-atRp18
-(dp19
+tp16
+atRp17
+(dp18
 (g3
 g4
-tp20
+tp19
 g1
-((lp21
+((lp20
 S'500 ml'
-p22
-atRp23
+p21
+atRp22
 s(g14
 g15
-tp24
+tp23
 g1
-((lp25
+((lp24
 S'24 oz'
-p26
-atRp27
-s(g11
-g12
-tp28
+p25
+atRp26
+s(g10
+g11
+tp27
 g1
-((lp29
+((lp28
 S'5 liter'
-p30
-atRp31
+p29
+atRp30
+s(S'Jesus'
+p31
+S'Tequila'
+p32
+tp33
+g1
+((lp34
+S'250 ml'
+p35
+atRp36
 s(g7
 g8
-tp32
+tp37
 g1
-((lp33
+((lp38
 S'1 liter'
-p34
-atRp35
+p39
+atRp40
 sg1
-((lp36
+((lp41
 ccopy_reg
 _reconstructor
-p37
+p42
 (cdrinkz.recipes
 Recipe
-p38
+p43
 c__builtin__
 object
-p39
-NtRp40
-(dp41
-S'Name'
-p42
-S'Chuy Drink'
-p43
-sS'Ingredient'
 p44
-(lp45
+NtRp45
+(dp46
+S'Name'
+p47
+S'Chuy Drink'
+p48
+sS'Ingredient'
+p49
+(lp50
 (S'Tequila'
 S'1.5 oz'
-tp46
+tp51
 a(S' Lime Juice'
 S'0.5 oz'
-tp47
-asbag37
-(g38
-g39
-NtRp48
-(dp49
-g42
-S'vomit inducing martini'
-p50
-sg44
-(lp51
-(S'orange juice'
-S'6 oz'
 tp52
-a(S'vermouth'
-S'1.5 oz'
-tp53
-asbag37
-(g38
-g39
-NtRp54
-(dp55
-g42
+asbag42
+(g43
+g44
+NtRp53
+(dp54
+g47
 S'whiskey bath'
-p56
-sg44
-(lp57
+p55
+sg49
+(lp56
 (S'blended scotch'
 S'2 liter'
-tp58
-asbag37
-(g38
-g39
-NtRp59
-(dp60
-g42
-S'scotch on the rocks'
-p61
-sg44
-(lp62
-(S'blended scotch'
-S'4 oz'
-tp63
-asbag37
-(g38
-g39
-NtRp64
-(dp65
-g42
-S'vodka martini'
-p66
-sg44
-(lp67
-(S'unflavored vodka'
+tp57
+asbag42
+(g43
+g44
+NtRp58
+(dp59
+g47
+S'vomit inducing martini'
+p60
+sg49
+(lp61
+(S'orange juice'
 S'6 oz'
-tp68
+tp62
 a(S'vermouth'
 S'1.5 oz'
-tp69
-asbatRp70
-tp71
+tp63
+asbag42
+(g43
+g44
+NtRp64
+(dp65
+g47
+S'scotch on the rocks'
+p66
+sg49
+(lp67
+(S'blended scotch'
+S'4 oz'
+tp68
+asbag42
+(g43
+g44
+NtRp69
+(dp70
+g47
+S'vodka martini'
+p71
+sg49
+(lp72
+(S'unflavored vodka'
+S'6 oz'
+tp73
+a(S'vermouth'
+S'1.5 oz'
+tp74
+asbatRp75
+tp76
 .

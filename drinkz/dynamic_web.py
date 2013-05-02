@@ -92,6 +92,14 @@ def generate_index():
         </head>
         <body>
         <h1>Drinkz</h1>
+
+	<p> <font size="04">Login using cookies:</font></p>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='login_1'>Login</a> 
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+	<a href='status'>Login Status</a>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href='logout'>Log out</a>
        
         <p> <font size="04">Recipes:</font></p>
         <p>  

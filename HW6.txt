@@ -27,7 +27,21 @@
 				     of all drinks of the given type
   	
 
+      The features can be seeing on the index page on the "Prices" section
+
 6.3 Change db.py to use SQLite - Not implemented
     Unable to implement this functionality
 
-6.4
+6.4 Modified the convert to ml request form to use AJAX/JSON-RPC
+
+6.5 Implemented cookies
+     Reference from: https://github.com/ctb/cse491-webz/blob/cookies/app.py
+     In the top part of the index page, I added a section named: 
+     "Login using cookies:" the section contains the following options:     
+        Login, Login Status, Log out
+     At the moment, only username is requiered for login
+
+
+
+     
+
